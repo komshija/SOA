@@ -28,7 +28,7 @@ namespace DeviceMicroservice.Clients
         public async Task PostOnDataClientAsync(SensorData data)
         {
             //await _httpClient.PostAsJsonAsync<SensorData>(_clientSettings.HostName,data);
-            await _httpClient.PostAsJsonAsync<SensorData>("https://localhost:5001/test", data);
+            await _httpClient.PostAsJsonAsync<SensorData>("https://localhost:5001/test", new SensorData());
 
             //_logger.LogInformation("{Time} :: Sending data ...", DateTime.Now );
         }

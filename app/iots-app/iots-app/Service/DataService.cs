@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using CsvHelper;
+using FileHelpers;
 using System.IO;
 using System.Globalization;
 using DeviceMicroservice.Models;
@@ -35,13 +35,14 @@ namespace DeviceMicroservice.Service
             this.logger = logger;
             SendInterval = 5;
             
-            _sendTimer = new Timer(SendData, null, TimeSpan.Zero, TimeSpan.Zero);
             
             r = new Random();
 
-            var csvReader = new CsvReader(new StreamReader("./Data/AirQuality.csv"), CultureInfo.InvariantCulture);
-            csvReader.Read();
-            data = csvReader.GetRecords<SensorData>().ToList();
+            var engine = new FileHelperEngine<SensorData>();
+            var records = engine.ReadFile("./Data/AirQuality.csv");
+            data = records.ToList();
+
+            _sendTimer = new Timer(SendData, null, TimeSpan.Zero, TimeSpan.Zero);
         }
 
         private void SendData(object state)
@@ -56,6 +57,7 @@ namespace DeviceMicroservice.Service
         {
             int index = r.Next(data.Count());
             await dataClient.PostOnDataClientAsync(data.ElementAt(index));
+
             await Task.Delay(TimeSpan.FromSeconds(SendInterval));
             _sendTimer.Change(TimeSpan.Zero, TimeSpan.Zero);
         }

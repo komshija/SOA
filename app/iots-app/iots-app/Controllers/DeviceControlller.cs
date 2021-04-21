@@ -50,7 +50,7 @@ namespace DeviceMicroservice.Controllers
         [HttpPost]
         public IActionResult TestPost([FromBody]SensorData data)
         {
-            _logger.LogInformation("{data}",data);
+            _logger.LogInformation("{time} :: {data}",DateTime.Now, data.T);
             return Ok();
         }
     }

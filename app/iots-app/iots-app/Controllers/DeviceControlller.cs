@@ -30,7 +30,8 @@ namespace DeviceMicroservice.Controllers
             return new OkObjectResult(new
             {
                 Name = "Device 1",
-                Desciption = "Description ..."
+                Desciption = "Description ...",
+                SendInterval = _service.GetSendInterval()
             });
         }
 
@@ -50,7 +51,7 @@ namespace DeviceMicroservice.Controllers
         [HttpPost]
         public IActionResult TestPost([FromBody]SensorData data)
         {
-            _logger.LogInformation("{time} :: {data}",DateTime.Now, data.T);
+            _logger.LogDebug("{time} :: {data}",DateTime.Now, data.T);
             return Ok();
         }
     }

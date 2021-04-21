@@ -8,5 +8,6 @@ namespace DeviceMicroservice.Service
     public interface IDataService
     {
         void SetSendInterval(int value);
+        int GetSendInterval();
     }
 }

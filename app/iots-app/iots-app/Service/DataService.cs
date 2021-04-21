@@ -15,6 +15,8 @@ namespace DeviceMicroservice.Service
 {
     public class DataService : IDataService
     {
+        #region Fields
+
         private readonly ILogger<DataService> logger;
 
         private readonly DataClient dataClient;
@@ -22,32 +24,30 @@ namespace DeviceMicroservice.Service
         private Task sendTask;
 
         private Random r;
-        public int SendInterval { get; set; }
-
         private Timer _sendTimer;
+        #endregion
+        #region Properties
+        public int SendInterval { get; set; }
+        private IList<SensorData> data { get; set; }
 
-        private IList<SensorData> data;
-      
-       
+        #endregion
+        #region Methods
         public DataService(DataClient dataClient,ILogger<DataService> logger)
         {
             this.dataClient = dataClient;
             this.logger = logger;
             SendInterval = 5;
-            
-            
             r = new Random();
-
             var engine = new FileHelperEngine<SensorData>();
             var records = engine.ReadFile("./Data/AirQuality.csv");
             data = records.ToList();
-
             _sendTimer = new Timer(SendData, null, TimeSpan.Zero, TimeSpan.Zero);
+            logger.LogInformation("Data service starting..");
         }
 
         private void SendData(object state)
         {
-            //logger.LogInformation("{time} :: data sent {data}", DateTime.Now, this.SendInterval);
+            logger.LogDebug("{time} :: data sent {data}", DateTime.Now, this.SendInterval);
             _sendTimer.Change(Timeout.Infinite, Timeout.Infinite);
             sendTask = ExecuteSendAsync();
             
@@ -66,6 +66,13 @@ namespace DeviceMicroservice.Service
         {
             this.SendInterval = value;
         }
-     
+
+        public int GetSendInterval()
+        {
+            return this.SendInterval;
+        }
+
+
+        #endregion
     }
 }

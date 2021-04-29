@@ -30,7 +30,7 @@ namespace DeviceMicroservice.Clients
             await _httpClient.PostAsJsonAsync<Data>(_clientSettings.HostName, new Data(data.Date,data.Time,data.T));
         }
 
-        record Data(DateTime date, DateTime time, decimal temp);
+        record Data(DateTime date, string time, decimal temp);
 
     }
 }

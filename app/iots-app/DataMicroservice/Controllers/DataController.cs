@@ -13,7 +13,7 @@ namespace DataMicroservice.Controllers
     public class DataController : Controller
     {
         private readonly IRedisClient _client;
-        public record Data(DateTime date, DateTime time, decimal temp);
+        public record Data(DateTime date, string time, decimal temp);
         private readonly ILogger<DataController> _logger;
 
         public DataController(IRedisClient client, ILogger<DataController> logger)

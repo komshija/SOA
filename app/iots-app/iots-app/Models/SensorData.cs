@@ -17,7 +17,6 @@ namespace DeviceMicroservice.Models
         [FieldConverter(typeof(TimeConverter))]
         public DateTime Time { get; set; }
 
-
         [FieldConverter(ConverterKind.Decimal, ",")]
         public decimal CO_GT { get; set; }
         public int PT08S1_CO { get; set; }

@@ -13,16 +13,12 @@ using DeviceMicroservice.Models;
 
 namespace DeviceMicroservice.Service
 {
-    public class DataService : IDataService
+    public class DataService : IDataService, IDisposable
     {
         #region Fields
-
         private readonly ILogger<DataService> logger;
-
         private readonly DataClient dataClient;
-
         private Task sendTask;
-
         private Random r;
         private Timer _sendTimer;
         #endregion
@@ -70,6 +66,11 @@ namespace DeviceMicroservice.Service
         public int GetSendInterval()
         {
             return this.SendInterval;
+        }
+
+        public void Dispose()
+        {
+            _sendTimer?.Dispose();
         }
 
 

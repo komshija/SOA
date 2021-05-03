@@ -1,12 +1,7 @@
-﻿using DeviceMicroservice.Models;
-using DeviceMicroservice.Service;
+﻿using DeviceMicroservice.Service;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace DeviceMicroservice.Controllers
 {
@@ -14,15 +9,13 @@ namespace DeviceMicroservice.Controllers
     [ApiController]
     public class DeviceControlller : Controller
     {
-        private readonly IDataService _service;
+        private readonly IDataServiceT _service;
         private readonly ILogger<DeviceControlller> _logger;
-        public DeviceControlller(IDataService service, ILogger<DeviceControlller> logger)
+        public DeviceControlller(IDataServiceT service, ILogger<DeviceControlller> logger)
         {
             _service = service;
             _logger = logger;
         }
-
-
         [Route("/")]
         [HttpGet]
         public IActionResult GetInfo()
@@ -35,7 +28,6 @@ namespace DeviceMicroservice.Controllers
             });
         }
 
-
         [Route("/{sendInterval}")]
         [HttpPost]
         public IActionResult ChangeSendInterval(int sendInterval)
@@ -46,13 +38,15 @@ namespace DeviceMicroservice.Controllers
             return Ok(sendInterval);
         }
 
-
-        [Route("/test")]
         [HttpPost]
-        public IActionResult TestPost([FromBody]SensorData data)
+        [Route("sensordevice")]
+        public IActionResult SensorDevice([FromBody] Data sensorData)
         {
-            _logger.LogDebug("{time} :: {data}",DateTime.Now, data.T);
-            return Ok();
+            //_client.JsonSet("Temp", sensorData.date.ToShortDateString(), sensorData);
+            _logger.LogInformation("Temperature data received: {data}", sensorData.value);
+            return Ok(sensorData);
         }
+
+        public record Data(DateTime date, string time, decimal value);
     }
 }

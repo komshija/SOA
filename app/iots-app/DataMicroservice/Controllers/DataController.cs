@@ -29,8 +29,6 @@ namespace DataMicroservice.Controllers
             return Accepted();
         }
 
-
-
         [HttpPost]
         [Route("sensordata")]
         public IActionResult SensorData([FromBody] Data sensorData)

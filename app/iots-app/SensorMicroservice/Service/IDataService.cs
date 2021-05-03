@@ -7,6 +7,8 @@ namespace DeviceMicroservice.Service
 {
     public interface IDataService
     {
+        void SetThreshold(float value);
+        float GetThreshold();
         void SetSendInterval(int value);
         int GetSendInterval();
     }

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using FileHelpers;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
-using FileHelpers;
 
-namespace DeviceMicroservice.Models
+namespace DeviceShared
 {
     [IgnoreFirst]
     [DelimitedRecord(";")]
@@ -13,22 +14,27 @@ namespace DeviceMicroservice.Models
     {
         [FieldConverter(ConverterKind.Date, "d/M/yyyy")]
         public DateTime Date { get; set; }
-
-        //[FieldConverter(typeof(TimeConverter))]
         public string Time { get; set; }
-
         [FieldConverter(ConverterKind.Decimal, ",")]
-        public decimal CO_GT { get; set; }
-        public int PT08S1_CO { get; set; }
-        public int NMHC_GT { get; set; }
+        public decimal CO_GT { get; set; } // kandidat
         [FieldConverter(ConverterKind.Decimal, ",")]
-        public decimal C6H6_GT { get; set; }
-        public int PT08S2_NMHC { get; set; }
-        public int NOx_GT { get; set; }
-        public int PT08S3_NOx { get; set; }
-        public int NO2_GT { get; set; }
-        public int PT08S4_NO2 { get; set; }
-        public int PT08S5_O3 { get; set; }
+        public decimal PT08S1_CO { get; set; }
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal NMHC_GT { get; set; }
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal C6H6_GT { get; set; } // kandidat benzene
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal PT08S2_NMHC { get; set; }
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal NOx_GT { get; set; } //kandidat
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal PT08S3_NOx { get; set; }
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal NO2_GT { get; set; } // kandidat
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal PT08S4_NO2 { get; set; }
+        [FieldConverter(ConverterKind.Decimal, ",")]
+        public decimal PT08S5_O3 { get; set; }
         [FieldConverter(ConverterKind.Decimal, ",")]
         public decimal T { get; set; }
         [FieldConverter(ConverterKind.Decimal, ",")]
@@ -55,8 +61,4 @@ namespace DeviceMicroservice.Models
         }
 
     }
-
-  
-
-
 }

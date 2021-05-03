@@ -1,41 +1,39 @@
-﻿using DeviceMicroservice.Clients;
-using Microsoft.Extensions.Hosting;
+﻿using FileHelpers;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using FileHelpers;
-using System.IO;
-using System.Globalization;
-using DeviceMicroservice.Models;
 
-namespace DeviceMicroservice.Service
+namespace DeviceShared
 {
-    public class DataService : IDataService, IDisposable
+    public class DataService : IDisposable
     {
         #region Fields
-        private readonly ILogger<DataService> logger;
-        private readonly DataClient dataClient;
-        private Task sendTask;
-        private Random r;
-        private Timer _sendTimer;
+        protected readonly ILogger<DataService> logger;
+        protected readonly DataClient dataClient;
+        protected Task sendTask;
+        protected Random r;
+        protected Timer _sendTimer;
         #endregion
         #region Properties
-        public int SendInterval { get; set; }
-        private IList<SensorData> data { get; set; }
+        protected int SendInterval { get; set; }
+        protected IList<SensorData> data { get; set; }
+        protected string DataValue { get; set; }
 
         #endregion
         #region Methods
-        public DataService(DataClient dataClient,ILogger<DataService> logger)
+        public DataService(DataClient dataClient, ILogger<DataService> logger, string dataValue)
         {
             this.dataClient = dataClient;
             this.logger = logger;
             SendInterval = 5;
+            DataValue = dataValue;
             r = new Random();
             var engine = new FileHelperEngine<SensorData>();
-            var records = engine.ReadFile("./Data/AirQuality.csv");
+            var records = engine.ReadFile("C:/Users/Stefan/source/repos/SOA-projekat/SOA/app/iots-app/DeviceShared/Data/AirQuality.csv");
             data = records.ToList();
             _sendTimer = new Timer(SendData, null, TimeSpan.Zero, TimeSpan.Zero);
             logger.LogInformation("Data service starting..");
@@ -46,34 +44,19 @@ namespace DeviceMicroservice.Service
             logger.LogDebug("{time} :: data sent {data}", DateTime.Now, this.SendInterval);
             _sendTimer.Change(Timeout.Infinite, Timeout.Infinite);
             sendTask = ExecuteSendAsync();
-            
-        } 
+        }
 
-        private async Task ExecuteSendAsync()
+        public virtual async Task ExecuteSendAsync()
         {
-            int index = r.Next(data.Count());
-            await dataClient.PostOnDataClientAsync(data.ElementAt(index));
-
             await Task.Delay(TimeSpan.FromSeconds(SendInterval));
             _sendTimer.Change(TimeSpan.Zero, TimeSpan.Zero);
-        }
-
-        public void SetSendInterval(int value)
-        {
-            this.SendInterval = value;
-        }
-
-        public int GetSendInterval()
-        {
-            return this.SendInterval;
         }
 
         public void Dispose()
         {
             _sendTimer?.Dispose();
         }
-
-
         #endregion
+
     }
 }

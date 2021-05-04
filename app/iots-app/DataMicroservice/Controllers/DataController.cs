@@ -13,7 +13,7 @@ namespace DataMicroservice.Controllers
     public class DataController : Controller
     {
         private readonly IRedisClient _client;
-        public record Data(DateTime date, string time, decimal temp);
+        public record Data(DateTime date, string time, decimal value);
         private readonly ILogger<DataController> _logger;
 
         public DataController(IRedisClient client, ILogger<DataController> logger)
@@ -34,7 +34,7 @@ namespace DataMicroservice.Controllers
         public IActionResult SensorData([FromBody] Data sensorData)
         {
             _client.JsonSet("Temp", sensorData.date.ToShortDateString(), sensorData);
-            _logger.LogInformation("Temperature data received: {data}", sensorData.temp);
+            _logger.LogInformation("Temperature data received: {data}", sensorData.value);
             return Ok(sensorData);
         }
     }

@@ -16,14 +16,14 @@ namespace DeviceShared
 
         public DataClient(HttpClient httpClient, IOptions<DataClientSettings> options, ILogger<DataClient> logger)
         {
+            _logger = logger;
             _httpClient = httpClient;
             _clientSettings = options.Value;
-            _logger = logger;
         }
 
         public async Task PostOnDataClientAsync(SensorData data, string value)
         {
-            await _httpClient.PostAsJsonAsync<Data>(_clientSettings.HostName, new Data(data.Date, data.Time, (decimal)data.GetType().GetProperty(value).GetValue(data)));
+             await _httpClient.PostAsJsonAsync<Data>(_clientSettings.HostName, new Data(data.Date, data.Time, (decimal)data.GetType().GetProperty(value).GetValue(data)));
         }
 
         record Data(DateTime date, string time, decimal value);

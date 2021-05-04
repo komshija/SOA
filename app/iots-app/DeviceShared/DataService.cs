@@ -33,7 +33,7 @@ namespace DeviceShared
             DataValue = dataValue;
             r = new Random();
             var engine = new FileHelperEngine<SensorData>();
-            var records = engine.ReadFile("C:/Users/Stefan/source/repos/SOA-projekat/SOA/app/iots-app/DeviceShared/Data/AirQuality.csv");
+            var records = engine.ReadFile("../DeviceShared/Data/AirQuality.csv");
             data = records.ToList();
             _sendTimer = new Timer(SendData, null, TimeSpan.Zero, TimeSpan.Zero);
             logger.LogInformation("Data service starting..");
@@ -41,7 +41,7 @@ namespace DeviceShared
 
         private void SendData(object state)
         {
-            logger.LogDebug("{time} :: data sent {data}", DateTime.Now, this.SendInterval);
+            logger.LogInformation("{time} :: data sent {data}", DateTime.Now, this.SendInterval);
             _sendTimer.Change(Timeout.Infinite, Timeout.Infinite);
             sendTask = ExecuteSendAsync();
         }

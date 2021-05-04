@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  redis:
+    image: redis
+    networks:
+        - internal
+  devicemicroservice:
+    image: ${DOCKER_REGISTRY-}devicemicroservice
+    build:
+      context: .
+      dockerfile: iots-app/Dockerfile
+    networks:
+        - internal
+
+  datamicroservice:
+    image: ${DOCKER_REGISTRY-}datamicroservice
+    build:
+      context: .
+      dockerfile: DataMicroservice/Dockerfile
+    depends_on:
+        - "redis"
+    networks:
+        - internal
+networks:
+  internal:
+
+volumes:
+  data:

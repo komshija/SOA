@@ -22,6 +22,7 @@ namespace DeviceMicroservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DataClientSettings>(Configuration.GetSection(nameof(DataClientSettings)));
+            var x = Configuration.GetSection(nameof(DataClientSettings));
             services.AddHttpClient<DataClient>();
             services.AddSingleton<IDataServiceT, DataServiceT>();
 

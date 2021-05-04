@@ -7,11 +7,11 @@ namespace DeviceMicroservice.Controllers
 {
     [Route("/api/{controller}")]
     [ApiController]
-    public class DeviceControlller : Controller
+    public class DeviceController : Controller
     {
         private readonly IDataServiceT _service;
-        private readonly ILogger<DeviceControlller> _logger;
-        public DeviceControlller(IDataServiceT service, ILogger<DeviceControlller> logger)
+        private readonly ILogger<DeviceController> _logger;
+        public DeviceController(IDataServiceT service, ILogger<DeviceController> logger)
         {
             _service = service;
             _logger = logger;
@@ -39,7 +39,7 @@ namespace DeviceMicroservice.Controllers
         }
 
         [HttpPost]
-        [Route("sensordevice")]
+        [Route("/test")]
         public IActionResult SensorDevice([FromBody] Data sensorData)
         {
             //_client.JsonSet("Temp", sensorData.date.ToShortDateString(), sensorData);

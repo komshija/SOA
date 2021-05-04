@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace DataMicroservice.Controllers
 {
-    [Route("/api/{controller}")]
     [ApiController]
     public class DataController : Controller
     {
@@ -23,14 +22,14 @@ namespace DataMicroservice.Controllers
         }
 
         [HttpGet]
-        [Route("search")]
+        [Route("/search")]
         public IActionResult Search()
         {
             return Accepted();
         }
 
         [HttpPost]
-        [Route("sensordata")]
+        [Route("/sensordata")]
         public IActionResult SensorData([FromBody] Data sensorData)
         {
             _client.JsonSet("Temp", sensorData.date.ToShortDateString(), sensorData);

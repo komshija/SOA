@@ -37,5 +37,16 @@ namespace DeviceMicroservice.Controllers
             _service.SetSendInterval(sendInterval);
             return Ok(sendInterval);
         }
+
+        [HttpPost]
+        [Route("/test")]
+        public IActionResult SensorDevice([FromBody] Data sensorData)
+        {
+            //_client.JsonSet("Temp", sensorData.date.ToShortDateString(), sensorData);
+            _logger.LogInformation("Temperature data received: {data}", sensorData.value);
+            return Ok(sensorData);
+        }
+
+        public record Data(DateTime date, string time, decimal value);
     }
 }

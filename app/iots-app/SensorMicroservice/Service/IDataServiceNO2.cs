@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace DeviceMicroservice.Service
+namespace SensorMicroservice.Service
 {
-    public interface IDataServiceT
+    public interface IDataServiceNO2
     {
+        void SetThreshold(double value);
+        double GetThreshold();
         void SetSendInterval(int value);
         int GetSendInterval();
     }

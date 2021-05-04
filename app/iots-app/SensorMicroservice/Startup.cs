@@ -1,16 +1,12 @@
+using DeviceShared;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using SensorMicroservice.Service;
+
 
 namespace SensorMicroservice
 {
@@ -26,6 +22,9 @@ namespace SensorMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DataClientSettings>(Configuration.GetSection(nameof(DataClientSettings)));
+            services.AddHttpClient<DataClient>();
+            services.AddSingleton<IDataServiceNO2, DataServiceNO2>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -43,6 +42,8 @@ namespace SensorMicroservice
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "SensorMicroservice v1"));
             }
+
+            app.ApplicationServices.GetService<IDataServiceNO2>();
 
             app.UseHttpsRedirection();
 

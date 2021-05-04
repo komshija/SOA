@@ -1,6 +1,7 @@
 ﻿using FileHelpers;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -15,6 +16,7 @@ namespace DeviceShared
         [FieldConverter(ConverterKind.Date, "d/M/yyyy")]
         public DateTime Date { get; set; }
         public string Time { get; set; }
+        [Display (Name = "CO")]
         [FieldConverter(ConverterKind.Decimal, ",")]
         public decimal CO_GT { get; set; } // kandidat
         [FieldConverter(ConverterKind.Decimal, ",")]
@@ -29,6 +31,7 @@ namespace DeviceShared
         public decimal NOx_GT { get; set; } //kandidat
         [FieldConverter(ConverterKind.Decimal, ",")]
         public decimal PT08S3_NOx { get; set; }
+        [Display(Name = "NO2")]
         [FieldConverter(ConverterKind.Decimal, ",")]
         public decimal NO2_GT { get; set; } // kandidat
         [FieldConverter(ConverterKind.Decimal, ",")]

@@ -6,10 +6,10 @@ using DeviceShared;
 
 namespace DeviceMicroservice.Service
 {
-    public class DataServiceT : DataService, IDataServiceT
+    public class DataServiceCO : DataService, IDataServiceCO
     {
         #region Methods
-        public DataServiceT(DataClient dataClient,ILogger<DataServiceT> logger, string dataValue = "T") :base(dataClient,logger,dataValue)
+        public DataServiceCO(DataClient dataClient,ILogger<DataServiceCO> logger, string dataValue = "CO_GT") :base(dataClient,logger,dataValue)
         {
 
         }

@@ -5,10 +5,8 @@ using System.Threading.Tasks;
 
 namespace DeviceMicroservice.Service
 {
-    public interface IDataService
+    public interface IDataServiceCO
     {
-        void SetThreshold(float value);
-        float GetThreshold();
         void SetSendInterval(int value);
         int GetSendInterval();
     }

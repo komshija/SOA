@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Reflection;
@@ -23,9 +24,11 @@ namespace DeviceShared
 
         public async Task PostOnDataClientAsync(SensorData data, string value)
         {
-             await _httpClient.PostAsJsonAsync<Data>(_clientSettings.HostName, new Data(data.Date, data.Time, (decimal)data.GetType().GetProperty(value).GetValue(data)));
+            PropertyInfo property = data.GetType().GetProperty(value);
+            var displayName = ((MemberInfo)property).GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+            await _httpClient.PostAsJsonAsync<Data>(_clientSettings.HostName, new Data(data.Date, data.Time, (decimal)property.GetValue(data),displayName.Name));
         }
 
-        record Data(DateTime date, string time, decimal value);
+        record Data(DateTime date, string time, decimal value,string dataName);
     }
 }

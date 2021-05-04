@@ -22,10 +22,8 @@ namespace DeviceMicroservice
         public void ConfigureServices(IServiceCollection services)
         {
             services.Configure<DataClientSettings>(Configuration.GetSection(nameof(DataClientSettings)));
-            var x = Configuration.GetSection(nameof(DataClientSettings));
             services.AddHttpClient<DataClient>();
-            services.AddSingleton<IDataServiceT, DataServiceT>();
-
+            services.AddSingleton<IDataServiceCO, DataServiceCO>();
 
             services.AddControllers();
             services.AddSwaggerGen(c =>
@@ -48,7 +46,7 @@ namespace DeviceMicroservice
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "iots_app v1"));
             }
             
-            app.ApplicationServices.GetService<IDataServiceT>();
+            app.ApplicationServices.GetService<IDataServiceCO>();
 
             app.UseHttpsRedirection();
 

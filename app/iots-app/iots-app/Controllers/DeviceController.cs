@@ -9,9 +9,9 @@ namespace DeviceMicroservice.Controllers
     [ApiController]
     public class DeviceController : Controller
     {
-        private readonly IDataServiceT _service;
+        private readonly IDataServiceCO _service;
         private readonly ILogger<DeviceController> _logger;
-        public DeviceController(IDataServiceT service, ILogger<DeviceController> logger)
+        public DeviceController(IDataServiceCO service, ILogger<DeviceController> logger)
         {
             _service = service;
             _logger = logger;

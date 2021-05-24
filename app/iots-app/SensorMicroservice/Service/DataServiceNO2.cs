@@ -22,7 +22,10 @@ namespace SensorMicroservice.Service
         {
             int index = r.Next(data.Count());
             if(data.ElementAt(index).CO_GT > (decimal)Threshold)
+            {
                 await dataClient.PostOnDataClientAsync(data.ElementAt(index), DataValue);
+                logger.LogInformation("NO2 salje podatke - {0}", data.ElementAt(index).NO2_GT);
+            }
 
             await Task.Delay(TimeSpan.FromSeconds(SendInterval));
             _sendTimer.Change(TimeSpan.Zero, TimeSpan.Zero);

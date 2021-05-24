@@ -19,4 +19,10 @@
     <ProjectReference Include="..\DeviceShared\DeviceShared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="AirQuality.csv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

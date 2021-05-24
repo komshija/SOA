@@ -27,8 +27,8 @@ namespace SensorMicroservice.Controllers
         {
             return new OkObjectResult(new
             {
-                Name = "Sensor 1",
-                Desciption = "Description ...",
+                Name = "NO2 Sensor ",
+                Desciption = "NO2 Sensor for Air Quality",
                 SendInterval = _service.GetSendInterval(),
                 Threshold = _service.GetThreshold()
             });

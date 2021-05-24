@@ -5,13 +5,10 @@ services:
     image: redis
     networks:
         - internal
-  devicemicroservice:
-    image: ${DOCKER_REGISTRY-}devicemicroservice
-    build:
-      context: .
-      dockerfile: iots-app/Dockerfile
-    networks:
-        - internal
+    volumes:
+        - redisdata:/data
+    expose:
+        - "6379" 
 
   datamicroservice:
     image: ${DOCKER_REGISTRY-}datamicroservice
@@ -19,11 +16,62 @@ services:
       context: .
       dockerfile: DataMicroservice/Dockerfile
     depends_on:
-        - "redis"
+        - redis
     networks:
         - internal
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "5001:80"
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+    expose:
+    - "80" 
+
+  co-sensor-microservice:
+    image: ${DOCKER_REGISTRY-}devicemicroservice
+    build:
+      context: .
+      dockerfile: iots-app/Dockerfile
+    networks:
+        - internal
+    depends_on:
+        - datamicroservice
+    environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ASPNETCORE_URLS=http://+:80
+    expose:
+        - "80" 
+    ports:
+        - "4001:80"
+    volumes:
+        - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+        - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
+  no2-sensor-microservice:
+    image: ${DOCKER_REGISTRY-}sensormicroservice
+    build:
+      context: .
+      dockerfile: SensorMicroservice/Dockerfile
+    networks:
+        - internal
+    depends_on:
+        - datamicroservice
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=http://+:80
+    ports:
+      - "6001:80"
+
+    expose:
+      - "80" 
+
+    volumes:
+      - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
 networks:
   internal:
 
 volumes:
-  data:
+  redisdata:

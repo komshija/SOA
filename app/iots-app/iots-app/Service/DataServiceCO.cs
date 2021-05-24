@@ -19,6 +19,8 @@ namespace DeviceMicroservice.Service
             int index = r.Next(data.Count());
             await dataClient.PostOnDataClientAsync(data.ElementAt(index),DataValue);
 
+            logger.LogInformation("CO2 salje podatke {0}", data.ElementAt(index).CO_GT);
+
             await Task.Delay(TimeSpan.FromSeconds(SendInterval));
             _sendTimer.Change(TimeSpan.Zero, TimeSpan.Zero);
         }

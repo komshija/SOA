@@ -17,7 +17,7 @@ namespace DataMicroservice.Clients
         public IDatabase Database => Connection.GetDatabase();
         private readonly ILogger<RedisClient> _logger;
 
-        public RedisClient(ILogger<RedisClient> logger, string host = "localhost", int port = 6379, bool allowAdmin = false)
+        public RedisClient(ILogger<RedisClient> logger, string host = "redis", int port = 6379, bool allowAdmin = false)
         {
             _logger = logger;
             configuration = new ConfigurationOptions()

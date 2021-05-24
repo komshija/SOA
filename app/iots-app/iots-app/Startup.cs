@@ -29,9 +29,9 @@ namespace DeviceMicroservice
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { 
-                    Title = "Device Microservice",
+                    Title = "CO Microservice",
                     Version = "v1",
-                    Description = "..."
+                    Description = "Sensor with data of Carbon monoxide."
                 });
             });
         }
@@ -48,7 +48,7 @@ namespace DeviceMicroservice
             
             app.ApplicationServices.GetService<IDataServiceCO>();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

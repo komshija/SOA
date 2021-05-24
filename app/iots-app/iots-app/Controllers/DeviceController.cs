@@ -5,7 +5,6 @@ using System;
 
 namespace DeviceMicroservice.Controllers
 {
-    [Route("/api/{controller}")]
     [ApiController]
     public class DeviceController : Controller
     {
@@ -38,15 +37,5 @@ namespace DeviceMicroservice.Controllers
             return Ok(sendInterval);
         }
 
-        [HttpPost]
-        [Route("/test")]
-        public IActionResult SensorDevice([FromBody] Data sensorData)
-        {
-            //_client.JsonSet("Temp", sensorData.date.ToShortDateString(), sensorData);
-            _logger.LogInformation("Temperature data received: {data}", sensorData.value);
-            return Ok(sensorData);
-        }
-
-        public record Data(DateTime date, string time, decimal value);
     }
 }

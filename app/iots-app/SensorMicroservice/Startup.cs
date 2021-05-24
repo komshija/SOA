@@ -29,7 +29,10 @@ namespace SensorMicroservice
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "SensorMicroservice", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { 
+                    Title = "NO2 Microservice",
+                    Description = "Sensor with data of Nitrogen dioxide.",
+                    Version = "v1" });
             });
         }
 
@@ -45,7 +48,7 @@ namespace SensorMicroservice
 
             app.ApplicationServices.GetService<IDataServiceNO2>();
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

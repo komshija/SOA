@@ -2,6 +2,7 @@
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -33,7 +34,7 @@ namespace DeviceShared
             DataValue = dataValue;
             r = new Random();
             var engine = new FileHelperEngine<SensorData>();
-            var records = engine.ReadFile("../DeviceShared/Data/AirQuality.csv");
+            var records = engine.ReadFile("./AirQuality.csv");
             data = records.ToList();
             _sendTimer = new Timer(SendData, null, TimeSpan.Zero, TimeSpan.Zero);
             logger.LogInformation("Data service starting..");
@@ -41,7 +42,7 @@ namespace DeviceShared
 
         private void SendData(object state)
         {
-            logger.LogInformation("{time} :: data sent {data}", DateTime.Now, this.SendInterval);
+            //logger.LogInformation("{time} :: data sent {data}", DateTime.Now, this.SendInterval);
             _sendTimer.Change(Timeout.Infinite, Timeout.Infinite);
             sendTask = ExecuteSendAsync();
         }

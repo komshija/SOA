@@ -9,7 +9,6 @@ FROM mcr.microsoft.com/dotnet/sdk:5.0-buster-slim AS build
 WORKDIR /src
 COPY ["iots-app/DeviceMicroservice.csproj", "iots-app/"]
 COPY ["DeviceShared/DeviceShared.csproj", "DeviceShared/"]
-COPY ["DeviceShared/Data/", "DeviceShared/Data"]
 RUN dotnet restore "iots-app/DeviceMicroservice.csproj"
 COPY . .
 WORKDIR "/src/iots-app"
@@ -21,4 +20,5 @@ RUN dotnet publish "DeviceMicroservice.csproj" -c Release -o /app/publish
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY ../DeviceShared/Data/AirQuality.csv /DeviceShared/Data/AirQuality.csv
 ENTRYPOINT ["dotnet", "DeviceMicroservice.dll"]

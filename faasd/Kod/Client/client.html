@@ -1,0 +1,43 @@
+<html>
+<head>
+
+<meta charset="UTF-8">
+
+</head>
+<body>
+<div>
+	<img id="slika" />
+</div>
+<div>
+	<input type="text" id="ulaz"/>
+	<button id="dugme">Generisi QR kod</button>
+</div>
+
+
+<script>
+	const url = "http://localhost:3000/"
+	const dugme = document.querySelector("#dugme");
+	dugme.addEventListener("click", async () => {
+		const text = document.querySelector("#ulaz");
+		if(text.value != null) {
+			console.log(text.value);
+			const body = {
+				input: text.value
+			};
+			const response = await fetch(url, {
+				method: 'POST',
+				headers: {
+					'Content-Type': 'application/json'
+				},
+				body: JSON.stringify(body)
+			});
+			const base64string = await response.json();
+			const img = document.querySelector("#slika");
+			img.src = base64string;
+			}
+			});
+	
+</script>
+</body>
+
+</html>

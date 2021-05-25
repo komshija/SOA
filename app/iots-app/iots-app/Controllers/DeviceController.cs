@@ -22,7 +22,7 @@ namespace DeviceMicroservice.Controllers
             return new OkObjectResult(new
             {
                 Name = "Device 1",
-                Desciption = "Description ...",
+                Desciption = "Carbon monoxide (chemical formula CO) is a colorless, odorless, and tasteless dangerous flammable gas that is slightly less dense than air. Carbon monoxide consists of one carbon atom and one oxygen atom. It is the simplest molecule of the Oxocarbon family. In coordination complexes the carbon monoxide ligand is called carbonyl.",
                 SendInterval = _service.GetSendInterval()
             });
         }

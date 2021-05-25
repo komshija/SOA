@@ -28,7 +28,7 @@ namespace SensorMicroservice.Controllers
             return new OkObjectResult(new
             {
                 Name = "NO2 Sensor ",
-                Desciption = "NO2 Sensor for Air Quality",
+                Desciption = "Nitrogen Dioxide (NO2) is one of a group of highly reactive gases known as oxides of nitrogen or nitrogen oxides (NOx). Other nitrogen oxides include nitrous acid and nitric acid. NO2 is used as the indicator for the larger group of nitrogen oxides. NO2 primarily gets in the air from the burning of fuel.",
                 SendInterval = _service.GetSendInterval(),
                 Threshold = _service.GetThreshold()
             });

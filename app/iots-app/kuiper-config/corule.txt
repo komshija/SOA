@@ -1,0 +1,14 @@
+{
+  "sql": "SELECT * from co where co > 5",
+  "actions": [
+    {
+      "log": {}
+    },
+    {
+      "mqtt": {
+        "server": "mqtt:1883",
+        "topic": "device/co/command"
+      }
+    }
+  ]
+}

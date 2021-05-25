@@ -1,0 +1,1 @@
+co(co float, date datetime) WITH ( DATASOURCE = "device/co/messages", FORMAT = "JSON");

@@ -32,7 +32,8 @@ namespace SensorMicroservice
                 c.SwaggerDoc("v1", new OpenApiInfo { 
                     Title = "NO2 Microservice",
                     Description = "Sensor with data of Nitrogen dioxide.",
-                    Version = "v1" });
+                    Version = "v1"
+                });
             });
         }
 

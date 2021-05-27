@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using DataMicroservice.Controllers;
 
 namespace DataMicroservice.Clients
 {
@@ -38,19 +39,25 @@ namespace DataMicroservice.Clients
                 //redis.ConnectionRestored += _Connection_ConnectionRestored;
                 return redis;
             });
-            logger.LogInformation("Redis connection established!");
+            if(Database.IsConnected("localhost"))
+                logger.LogInformation("Redis connection established!");
         }
 
-        public T JsonGet<T>(RedisKey key, RedisValue hashField, CommandFlags flags = CommandFlags.None)
+        public List<KeyValuePair<string, DataController.Data>> JsonGet(RedisKey key, CommandFlags flags = CommandFlags.None)
         {
-            RedisValue value = Database.HashGet(key, hashField);
-            if (!value.HasValue)
-                return default;
-            return JsonConvert.DeserializeObject<T>(value);
+            HashEntry[] data = Database.HashGetAll(key);
+            List<KeyValuePair<string, DataController.Data>> lista = new List<KeyValuePair<string, DataController.Data>>(); 
+            foreach (var item in data)
+            {
+                lista.Add(new KeyValuePair<string,DataController.Data>(item.Name, JsonConvert.DeserializeObject<DataController.Data>(item.Value)));
+            }
+
+            return lista;
         }
 
         public bool JsonSet(RedisKey key, RedisValue hashField, object value, TimeSpan? expiry = null, When when = When.Always, CommandFlags flags = CommandFlags.None)
         {
+            value = value as DataMicroservice.Controllers.DataController.Data;
             if (value == null)
                 return false;
             return Database.HashSet(key, hashField, JsonConvert.SerializeObject(value), when, flags);

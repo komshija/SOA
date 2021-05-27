@@ -26,9 +26,9 @@ namespace DeviceShared
         {
             PropertyInfo property = data.GetType().GetProperty(value);
             var displayName = ((MemberInfo)property).GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-            await _httpClient.PostAsJsonAsync<Data>(_clientSettings.HostName, new Data(data.Date, data.Time, (decimal)property.GetValue(data),displayName.Name));
+            await _httpClient.PostAsJsonAsync(_clientSettings.HostName, new Data(data.Date.ToString("dd/MM/yyyy HH:mm:ss"), (decimal)property.GetValue(data),displayName.Name));
         }
 
-        record Data(DateTime date, string time, decimal value,string dataName);
+        record Data(string date, decimal value,string dataName);
     }
 }

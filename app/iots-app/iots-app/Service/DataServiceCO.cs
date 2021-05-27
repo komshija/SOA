@@ -17,6 +17,7 @@ namespace DeviceMicroservice.Service
         public override async Task ExecuteSendAsync()
         {
             int index = r.Next(data.Count());
+            data.ElementAt(index).Date = DateTime.Now;
             await dataClient.PostOnDataClientAsync(data.ElementAt(index),DataValue);
 
             logger.LogInformation("CO2 salje podatke {0}", data.ElementAt(index).CO_GT);

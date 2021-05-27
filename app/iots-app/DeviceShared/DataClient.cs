@@ -24,9 +24,17 @@ namespace DeviceShared
 
         public async Task PostOnDataClientAsync(SensorData data, string value)
         {
-            PropertyInfo property = data.GetType().GetProperty(value);
-            var displayName = ((MemberInfo)property).GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
-            await _httpClient.PostAsJsonAsync(_clientSettings.HostName, new Data(data.Date.ToString("dd/MM/yyyy HH:mm:ss"), (decimal)property.GetValue(data),displayName.Name));
+            try
+            {
+                PropertyInfo property = data.GetType().GetProperty(value);
+                var displayName = ((MemberInfo)property).GetCustomAttribute(typeof(DisplayAttribute)) as DisplayAttribute;
+                await _httpClient.PostAsJsonAsync(_clientSettings.HostName, new Data(data.Date.ToString("dd/MM/yyyy HH:mm:ss"), (decimal)property.GetValue(data),displayName.Name));
+            }
+            catch(Exception e)
+            {
+                _logger.LogInformation("Failed to post to Data microservice");
+                
+            }
         }
 
         record Data(string date, decimal value,string dataName);

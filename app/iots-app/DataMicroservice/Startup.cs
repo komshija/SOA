@@ -1,4 +1,5 @@
 using DataMicroservice.Clients;
+using DataMicroservice.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -34,6 +35,7 @@ namespace DataMicroservice
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "DataMicroservice", Version = "v1" });
             });
             services.AddSingleton<IRedisClient, RedisClient>();
+            services.AddSingleton<IMqttPublisher, MqttPublisher>();
 
         }
 
@@ -46,6 +48,8 @@ namespace DataMicroservice
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DataMicroservice v1"));
             }
+
+            app.ApplicationServices.GetService<IMqttPublisher>();
 
             //app.UseHttpsRedirection();
 

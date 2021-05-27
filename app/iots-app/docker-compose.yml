@@ -20,23 +20,25 @@ services:
         networks: 
           - internal
 
- #   cep:
- #       image: "emqx/kuiper:1.1.2-alpine"
- #       ports: 
- #         - "9081:9081" # rest config
- #       expose: 
- #         - "9081"
- #       networks: 
- #         - internal
- #       depends_on: 
- #         - mqtt
- #       environment: 
- #        - MQTT_SOURCE__DEFAULT__SERVERS= [mqtt:1883]
- #      volumes: 
- #        - ./kuiper-config/init.sh:/init.sh
- #        - ./kuiper-config/co.txt:/co.txt
- #        - ./kuiper-config/corule.txt:/corule.txt
- #       command: 'sh -c "/init.sh"'
+    cep:
+        image: "emqx/kuiper:1.1.2-alpine"
+        ports: 
+          - "9081:9081" # rest config
+        expose: 
+          - "9081"
+        networks: 
+          - internal
+        depends_on: 
+          - mqtt
+        environment: 
+         - MQTT_SOURCE__DEFAULT__SERVERS= [mqtt:1883]
+        volumes: 
+         - ./kuiper-config/init.sh:/init.sh
+         - ./kuiper-config/co.txt:/co.txt
+         - ./kuiper-config/corule.txt:/corule.txt
+         - ./kuiper-config/no2.txt:/no2.txt
+         - ./kuiper-config/no2rule.txt:/no2rule.txt
+        command: 'sh -c "/init.sh"'
 
     datamicroservice:
         image: ${DOCKER_REGISTRY-}datamicroservice
@@ -97,8 +99,31 @@ services:
         volumes:
           - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
+    commandmicroservice:
+        image: ${DOCKER_REGISTRY-}commandmicroservice
+        build:
+          context: .
+          dockerfile: CommandMicroservice/Dockerfile
+        networks:
+            - internal
+        depends_on: 
+            - no2-sensor-microservice
+            - co-sensor-microservice
+            - mqtt
+            - cep
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_URLS=http://+:80
+        ports:
+          - "7001:80"
+        expose:
+          - "80" 
+        volumes:
+          - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
 networks:
   internal:
 
 volumes:
   redisdata:
+

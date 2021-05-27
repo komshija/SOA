@@ -1,5 +1,5 @@
 {
-  "sql": "SELECT * from co where co > 5",
+  "sql": "SELECT * from co where value > 5",
   "actions": [
     {
       "log": {}

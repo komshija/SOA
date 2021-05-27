@@ -37,5 +37,13 @@ namespace DeviceMicroservice.Controllers
             return Ok(sendInterval);
         }
 
+
+        [Route("/actuator")]
+        [HttpPost]
+        public IActionResult ActuatorCO()
+        {
+            _logger.LogInformation("Ukljucen alarm!");
+            return Ok("Ukljucen alarm!");
+        }
     }
 }

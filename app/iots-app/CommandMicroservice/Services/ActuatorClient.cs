@@ -18,12 +18,12 @@ namespace CommandMicroservice.Services
 
         public async void PostOnCOActuator()
         {
-            await _httpClient.PostAsync("localhost:4001", new StringContent("Activate CO alarm"));
+            await _httpClient.PostAsync("http://co-sensor-microservice:80/actuator", new StringContent("Activate CO alarm"));
         }
 
         public async void PostOnNO2Actuator()
         {
-            await _httpClient.PostAsync("localhost:4001", new StringContent("Activate NO2 alarm"));
+            await _httpClient.PostAsync("http://no2-sensor-microservice:80/actuator", new StringContent("Activate NO2 alarm"));
         }
     }
 }

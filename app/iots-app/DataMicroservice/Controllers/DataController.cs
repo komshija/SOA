@@ -1,4 +1,5 @@
 ﻿using DataMicroservice.Clients;
+using DataMicroservice.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -14,11 +15,13 @@ namespace DataMicroservice.Controllers
         private readonly IRedisClient _client;
         public record Data(string date, decimal value, string dataName);
         private readonly ILogger<DataController> _logger;
+        private readonly IMqttPublisher _mqttPublisher;
 
-        public DataController(IRedisClient client, ILogger<DataController> logger)
+        public DataController(IRedisClient client, ILogger<DataController> logger, IMqttPublisher mqttPublisher)
         {
             _client = client;
             _logger = logger;
+            _mqttPublisher = mqttPublisher;
         }
 
         [HttpPost]
@@ -26,6 +29,12 @@ namespace DataMicroservice.Controllers
         public IActionResult SensorData([FromBody] Data sensorData)
         {
             _client.JsonSet(sensorData.dataName, sensorData.date, sensorData);
+            var mqttValue = new IMqttPublisher.Data(sensorData.date, sensorData.value, sensorData.dataName);
+            if (sensorData.dataName.CompareTo("CO") == 0)
+                _mqttPublisher.COMqttPublish(mqttValue);
+            else 
+                _mqttPublisher.NO2MqttPublish(mqttValue);
+
             _logger.LogInformation(sensorData.dataName + " data received: {data} that was generated : {date}", sensorData.value, sensorData.date);
             return Ok(sensorData);
         }

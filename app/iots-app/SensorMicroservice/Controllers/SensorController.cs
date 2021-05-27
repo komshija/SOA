@@ -53,5 +53,13 @@ namespace SensorMicroservice.Controllers
             _service.SetThreshold(threshold);
             return Ok(threshold);
         }
+
+        [Route("/actuator")]
+        [HttpPost]
+        public IActionResult ActuatorNO2()
+        {
+            _logger.LogInformation("Ukljucen alarm!");
+            return Ok("Ukljucen alarm!");
+        }
     }
 }

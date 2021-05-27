@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using MQTTnet.Client;
+using CommandMicroservice.Services;
+using CommandMicroservice.Hubs;
 
 namespace CommandMicroservice
 {
@@ -27,12 +29,20 @@ namespace CommandMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "CommandMicroservice", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { 
+                    Title = "Command Microservice",
+                    Version = "v1"
+                });
             });
+
+            services.AddHttpClient<ActuatorClient>();
+            services.AddSingleton<IMqttSubscriber,MqttSubscriber>();
+            services.AddSignalR();
+            services.AddTransient<INotificationService, NotificationService>();
             
         }
 
@@ -46,7 +56,9 @@ namespace CommandMicroservice
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "CommandMicroservice v1"));
             }
 
-            app.UseHttpsRedirection();
+            app.ApplicationServices.GetService<IMqttSubscriber>();
+
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 
@@ -55,6 +67,7 @@ namespace CommandMicroservice
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapHub<NotificationsHub>("/notifications");
             });
         }
     }

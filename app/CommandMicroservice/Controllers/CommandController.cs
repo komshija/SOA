@@ -10,9 +10,6 @@ namespace CommandMicroservice.Controllers
     [Route("/")]
     public class CommandController : Controller
     {
-        public IActionResult Index()
-        {
-            return View();
-        }
+        
     }
 }

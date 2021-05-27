@@ -8,20 +8,27 @@ using MQTTnet.Client;
 using MQTTnet.Client.Subscribing;
 using MQTTnet.Client.Receiving;
 using MQTTnet.Client.Options;
+using Microsoft.Extensions.Logging;
+using System.Text;
+using CommandMicroservice.Hubs;
 
 namespace CommandMicroservice.Services
 {
-    public class MqttSubscriber
+    public class MqttSubscriber : IMqttSubscriber
     {
         private static string coTopic = "device/co/command";
         private static string no2Topic = "device/no2/command";
         private IMqttClient mqttClient;
         private readonly ActuatorClient _actuatorClient;
+        private readonly ILogger<MqttSubscriber> _logger;
+        private readonly INotificationService _notificationService;
 
-        public MqttSubscriber(ActuatorClient actuatorClient)
+        public MqttSubscriber(ActuatorClient actuatorClient, ILogger<MqttSubscriber> logger, INotificationService notificationService)
         {
+            _logger = logger;
             _actuatorClient = actuatorClient;
-            Task.Run(() => ConnectToMqtt());
+            _notificationService = notificationService;
+            ConnectToMqtt().GetAwaiter().GetResult();
 
         }
 
@@ -29,10 +36,11 @@ namespace CommandMicroservice.Services
         {
             IMqttFactory factory = new MqttFactory();
             mqttClient = factory.CreateMqttClient();
-            IMqttClientOptions options = new MqttClientOptionsBuilder().WithTcpServer("mqtt", 1833).Build();
+            IMqttClientOptions options = new MqttClientOptionsBuilder().WithTcpServer("localhost", 1883).Build();
             await mqttClient.ConnectAsync(options, CancellationToken.None);
             if(mqttClient.IsConnected)
             {
+                _logger.LogInformation("Connected to MQTT broker.");
                 await mqttClient.SubscribeAsync(coTopic);
                 await mqttClient.SubscribeAsync(no2Topic);
 
@@ -42,34 +50,34 @@ namespace CommandMicroservice.Services
                     int topicId = getTopicId(msgTopic);
                     switch(topicId)
                     {
-                        case 1:
+                        case 0:
                             COCommandMessageHandler(e.ApplicationMessage);
                             break;
-                        case 2:
+                        case 1:
                             NO2CommandMessageHandler(e.ApplicationMessage);
                             break;
                         default:
                             break;
                     }
-                    
                 });
 
             }
-        
-        
         }
 
-
-        private void COCommandMessageHandler(MqttApplicationMessage msg)
+        public void COCommandMessageHandler(MqttApplicationMessage msg)
         {
-
+            _logger.LogInformation("CO command received!");
+            _notificationService.SendNotification("CO command activated.");
+            _actuatorClient.PostOnCOActuator();
+            
         }
 
-        private void NO2CommandMessageHandler(MqttApplicationMessage msg)
+        public void NO2CommandMessageHandler(MqttApplicationMessage msg)
         {
-
+            _logger.LogInformation("NO2 command received!");
+            _notificationService.SendNotification("NO2 command activated.");
+            _actuatorClient.PostOnNO2Actuator();
         }
-
 
         private int getTopicId(string topic)
         {

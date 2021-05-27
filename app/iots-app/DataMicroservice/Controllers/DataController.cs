@@ -21,19 +21,12 @@ namespace DataMicroservice.Controllers
             _logger = logger;
         }
 
-        [HttpGet]
-        [Route("/search")]
-        public IActionResult Search()
-        {
-            return Accepted();
-        }
-
         [HttpPost]
         [Route("/sensordata")]
         public IActionResult SensorData([FromBody] Data sensorData)
         {
             _client.JsonSet(sensorData.dataName, sensorData.date, sensorData);
-            _logger.LogInformation(sensorData.dataName +" data received: {data} that was generated : {date}", sensorData.value, sensorData.date);
+            _logger.LogInformation(sensorData.dataName + " data received: {data} that was generated : {date}", sensorData.value, sensorData.date);
             return Ok(sensorData);
         }
 
@@ -41,34 +34,68 @@ namespace DataMicroservice.Controllers
         [Route("/getco")]
         public IActionResult GetCO()
         {
-            var data = _client.JsonGet("CO");
-            return new OkObjectResult(data);
+            try
+            {
+                var data = _client.JsonGet("CO");
+                return new OkObjectResult(data);
+            }
+            catch (Exception e)
+            {
+                return new NoContentResult();
+            }
         }
 
         [HttpGet]
         [Route("/getno2")]
         public IActionResult GetNO2()
         {
-            var data = _client.JsonGet("NO2");
-            return new OkObjectResult(data);
+            try
+            {
+                var data = _client.JsonGet("NO2");
+                return new OkObjectResult(data);
+            }
+            catch (Exception e)
+            {
+                return new NoContentResult();
+            }
         }
 
         [HttpGet]
         [Route("/greater/{sensor}/{value}")]
         public IActionResult GetGreater(string sensor, int value)
         {
-            var data = _client.JsonGet(sensor);
-            List<Data> lista = data.Select(item => item.Value).Where(item => item.value >= value).ToList();
-            return new OkObjectResult(lista);
+            try
+            {
+                sensor = sensor.ToUpper();
+                if (sensor.CompareTo("CO") != 0 || sensor.CompareTo("NO2") != 0)
+                    return new NoContentResult();
+                var data = _client.JsonGet(sensor);
+                List<Data> lista = data.Select(item => item.Value).Where(item => item.value >= value).ToList();
+                return new OkObjectResult(lista);
+            }
+            catch (Exception e)
+            {
+                return new NoContentResult();
+            }
         }
 
         [HttpGet]
         [Route("/less/{sensor}/{value}")]
         public IActionResult GetLess(string sensor, int value)
         {
-            var data = _client.JsonGet(sensor);
-            List<Data> lista = data.Select(item => item.Value).Where(item => item.value < value).ToList();
-            return new OkObjectResult(lista);
+            try
+            {
+                sensor = sensor.ToUpper();
+                if (sensor.CompareTo("CO") != 0 || sensor.CompareTo("NO2") != 0)
+                    return new NoContentResult();
+                var data = _client.JsonGet(sensor);
+                List<Data> lista = data.Select(item => item.Value).Where(item => item.value < value).ToList();
+                return new OkObjectResult(lista);
+            }
+            catch (Exception e)
+            {
+                return new NoContentResult();
+            }
         }
     }
 }

@@ -34,6 +34,7 @@ namespace CommandMicroservice.Services
 
         private async Task ConnectToMqtt()
         {
+            await Task.Delay(TimeSpan.FromSeconds(5));
             IMqttFactory factory = new MqttFactory();
             mqttClient = factory.CreateMqttClient();
             IMqttClientOptions options = new MqttClientOptionsBuilder().WithTcpServer("mqtt", 1883).Build();
@@ -47,6 +48,7 @@ namespace CommandMicroservice.Services
                 {
                     _logger.LogInformation("Failed to connect to MQTT broker. Waiting 10 sec");
                     await Task.Delay(TimeSpan.FromSeconds(10));
+                    _logger.LogInformation("Trying again to connect to MQTT broker");
                 }
             }
             if (mqttClient.IsConnected)

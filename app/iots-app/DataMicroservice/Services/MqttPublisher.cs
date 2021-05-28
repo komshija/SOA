@@ -62,7 +62,7 @@ namespace DataMicroservice.Services
         public async Task NO2MqttPublish(Data value)
         {
             await mqttClient.PublishAsync(new MqttApplicationMessageBuilder()
-                 .WithTopic(coTopic)
+                 .WithTopic(no2Topic)
                  .WithPayload(JsonConvert.SerializeObject(value))
                  .Build());
         }

@@ -121,9 +121,30 @@ services:
         volumes:
           - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
 
+    apigateway:
+        image: ${DOCKER_REGISTRY-}apigateway
+        build:
+          context: .
+          dockerfile: APIGateway/Dockerfile
+        depends_on: 
+            - no2-sensor-microservice
+            - co-sensor-microservice
+            - datamicroservice
+            - commandmicroservice
+        environment:
+          - ASPNETCORE_ENVIRONMENT=Development
+          - ASPNETCORE_URLS=http://+:80
+        ports:
+          - "3500:80"
+        expose:
+          - "80" 
+        volumes:
+          - ${APPDATA}/ASP.NET/Https:/root/.aspnet/https:ro
+
 networks:
   internal:
 
 volumes:
   redisdata:
+
 

@@ -34,7 +34,7 @@ namespace SensorMicroservice.Controllers
             });
         }
 
-        [Route("/{sendInterval}")]
+        [Route("/interval/{sendInterval}")]
         [HttpPost]
         public IActionResult ChangeSendInterval(int sendInterval)
         {
@@ -45,7 +45,7 @@ namespace SensorMicroservice.Controllers
             return Ok(sendInterval);
         }
 
-        [Route("/{threshold}")]
+        [Route("/treshold/{threshold}")]
         [HttpPost]
         public IActionResult ChangeThreshold(double threshold)
         {

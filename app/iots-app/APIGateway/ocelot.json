@@ -118,7 +118,7 @@
       "SwaggerKey": "no2device"
     },
     {
-      "DownstreamPathTemplate": "/{sendInterval}",
+      "DownstreamPathTemplate": "/interval/{sendInterval}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -131,7 +131,7 @@
       "SwaggerKey": "no2device"
     },
     {
-      "DownstreamPathTemplate": "/{threshold}",
+      "DownstreamPathTemplate": "/treshold/{threshold}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -139,7 +139,7 @@
           "Port": 6001
         }
       ],
-      "UpstreamPathTemplate": "/api/{threshold}",
+      "UpstreamPathTemplate": "/api/no2treshold/{threshold}",
       "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "no2device"
     }

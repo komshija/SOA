@@ -32,7 +32,7 @@ namespace DataMicroservice.Controllers
             var mqttValue = new IMqttPublisher.Data(sensorData.date, sensorData.value, sensorData.dataName);
             if (sensorData.dataName.CompareTo("CO") == 0)
                 _mqttPublisher.COMqttPublish(mqttValue);
-            else 
+            else
                 _mqttPublisher.NO2MqttPublish(mqttValue);
 
             _logger.LogInformation(sensorData.dataName + " data received: {data} that was generated : {date}", sensorData.value, sensorData.date);
@@ -76,11 +76,13 @@ namespace DataMicroservice.Controllers
             try
             {
                 sensor = sensor.ToUpper();
-                if (sensor.CompareTo("CO") != 0 || sensor.CompareTo("NO2") != 0)
-                    return new NoContentResult();
-                var data = _client.JsonGet(sensor);
-                List<Data> lista = data.Select(item => item.Value).Where(item => item.value >= value).ToList();
-                return new OkObjectResult(lista);
+                if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
+                {
+                    var data = _client.JsonGet(sensor);
+                    List<Data> lista = data.Select(item => item.Value).Where(item => item.value >= value).ToList();
+                    return new OkObjectResult(lista);
+                }
+                return new NoContentResult();
             }
             catch (Exception e)
             {
@@ -95,11 +97,13 @@ namespace DataMicroservice.Controllers
             try
             {
                 sensor = sensor.ToUpper();
-                if (sensor.CompareTo("CO") != 0 || sensor.CompareTo("NO2") != 0)
-                    return new NoContentResult();
-                var data = _client.JsonGet(sensor);
-                List<Data> lista = data.Select(item => item.Value).Where(item => item.value < value).ToList();
-                return new OkObjectResult(lista);
+                if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
+                {
+                    var data = _client.JsonGet(sensor);
+                    List<Data> lista = data.Select(item => item.Value).Where(item => item.value < value).ToList();
+                    return new OkObjectResult(lista);
+                }
+                return new NoContentResult();
             }
             catch (Exception e)
             {

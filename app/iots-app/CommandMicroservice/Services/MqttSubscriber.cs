@@ -81,7 +81,7 @@ namespace CommandMicroservice.Services
         {
             _logger.LogInformation("CO command received!");
             _notificationService.SendNotification("CO command activated.");
-            _actuatorClient.PostOnCOActuator();
+            _actuatorClient.PostOnCOActuator("Activate CO alarm!");
             
         }
 
@@ -89,7 +89,7 @@ namespace CommandMicroservice.Services
         {
             _logger.LogInformation("NO2 command received!");
             _notificationService.SendNotification("NO2 command activated.");
-            _actuatorClient.PostOnNO2Actuator();
+            _actuatorClient.PostOnNO2Actuator("Activate NO2 alarm!");
         }
 
         private int getTopicId(string topic)

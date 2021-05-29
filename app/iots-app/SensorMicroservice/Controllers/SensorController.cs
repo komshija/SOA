@@ -41,25 +41,27 @@ namespace SensorMicroservice.Controllers
             if (sendInterval <= 0)
                 return BadRequest();
             _service.SetSendInterval(sendInterval);
+            _logger.LogInformation("Send interval value has been changed on : {sendInterval}s !" + sendInterval);
             return Ok(sendInterval);
         }
 
-        [Route("/threshold")]
+        [Route("/{threshold}")]
         [HttpPost]
         public IActionResult ChangeThreshold(double threshold)
         {
             if (threshold <= 2)
                 return BadRequest();
             _service.SetThreshold(threshold);
+            _logger.LogInformation("Threshold value has been changed on : {threshold} !" + threshold);
             return Ok(threshold);
         }
 
         [Route("/actuator")]
         [HttpPost]
-        public IActionResult ActuatorNO2()
+        public IActionResult ActuatorNO2([FromBody] string command)
         {
-            _logger.LogInformation("Ukljucen alarm!");
-            return Ok("Ukljucen alarm!");
+            _logger.LogInformation("Command : " + command);
+            return Ok(command);
         }
     }
 }

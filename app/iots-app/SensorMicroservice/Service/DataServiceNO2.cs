@@ -21,7 +21,7 @@ namespace SensorMicroservice.Service
         public override async Task ExecuteSendAsync()
         {
             int index = r.Next(data.Count());
-            if(data.ElementAt(index).CO_GT > (decimal)Threshold)
+            if(data.ElementAt(index).NO2_GT > (decimal)Threshold)
             {
                 data.ElementAt(index).Date = DateTime.Now;
                 await dataClient.PostOnDataClientAsync(data.ElementAt(index), DataValue);

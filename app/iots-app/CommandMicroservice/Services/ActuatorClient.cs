@@ -18,29 +18,29 @@ namespace CommandMicroservice.Services
             _logger = logger;
         }
 
-        public async void PostOnCOActuator()
+        public async void PostOnCOActuator(string command)
         {
             try
             {
-                await _httpClient.PostAsync("http://co-sensor-microservice:80/actuator", new StringContent("Activate CO alarm"));
-                _logger.LogInformation("===== Command sucessfuly activated CO alarm! =====");
+                await _httpClient.PostAsJsonAsync("http://co-sensor-microservice:80/actuator", command);
+                _logger.LogInformation("===== Command sucessfuly activated on CO actuator! =====");
             }
             catch(Exception e)
             {
-                _logger.LogInformation("Command failed to Activate CO alarm!");
+                _logger.LogInformation("Command failed to activate on CO actuator!");
             }
         }
 
-        public async void PostOnNO2Actuator()
+        public async void PostOnNO2Actuator(string command)
         {
             try
             {
-                await _httpClient.PostAsync("http://no2-sensor-microservice:80/actuator", new StringContent("Activate NO2 alarm"));
-                _logger.LogInformation("===== Command sucessfuly activated NO2 alarm! =====");
+                await _httpClient.PostAsJsonAsync("http://no2-sensor-microservice:80/actuator", command);
+                _logger.LogInformation("===== Command sucessfuly activated on NO2 actuator! =====");
             }
             catch(Exception e)
             {
-                _logger.LogInformation("Command failed to Activate NO2 alarm!");
+                _logger.LogInformation("Command failed to activate on NO2 actuator!");
             }
         }
     }

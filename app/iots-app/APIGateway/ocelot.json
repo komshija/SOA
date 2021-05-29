@@ -1,16 +1,192 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/todos/{id}",
-      "DownstreamScheme": "https",
+      "DownstreamPathTemplate": "/getco",
+      "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "jsonplaceholder.typicode.com",
-          "Port": 443
+          "Host": "localhost",
+          "Port": 5000
         }
       ],
-      "UpstreamPathTemplate": "/todos/{id}",
-      "UpstreamHttpMethod": [ "Get" ]
+      "UpstreamPathTemplate": "/api/getco",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "data"
+    },
+    {
+      "DownstreamPathTemplate": "/getno2",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/getno2",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "data"
+    },
+    {
+      "DownstreamPathTemplate": "/greater/{sensor}/{value}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/greater/{sensor}/{value}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "data"
+    },
+    {
+      "DownstreamPathTemplate": "/less/{sensor}/{value}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 5000
+        }
+      ],
+      "UpstreamPathTemplate": "/api/less/{senosr}/{value}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "data"
+    },
+    {
+      "DownstreamPathTemplate": "/cocommand/{command}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/cocommand/{command}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "command"
+    },
+    {
+      "DownstreamPathTemplate": "/no2command/{command}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 7001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/no2command/{command}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "command"
+    },
+    {
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 4001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/coinfo",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "codevice"
+    },
+    {
+      "DownstreamPathTemplate": "/{sendInterval}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 4001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/cosendinterval/{sendInterval}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "codevice"
+    },
+    {
+      "DownstreamPathTemplate": "/",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/no2info",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "no2device"
+    },
+    {
+      "DownstreamPathTemplate": "/{sendInterval}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/no2sendinterval/{sendInterval}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "no2device"
+    },
+    {
+      "DownstreamPathTemplate": "/{threshold}",
+      "DownstreamScheme": "http",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "localhost",
+          "Port": 6001
+        }
+      ],
+      "UpstreamPathTemplate": "/api/{threshold}",
+      "UpstreamHttpMethod": [ "Post" ],
+      "SwaggerKey": "no2device"
+    }
+
+
+
+  ],
+  "SwaggerEndPoints": [
+    {
+      "Key": "data",
+      "Config": [
+        {
+          "Name": "DataMicroservice",
+          "Version": "v1",
+          "Url": "http://localhost:5000/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "command",
+      "Config": [
+        {
+          "Name": "CommandService",
+          "Version": "v1",
+          "Url": "http://localhost:7001/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "codevice",
+      "Config": [
+        {
+          "Name": "CODeviceMicroservice",
+          "Version": "v1",
+          "Url": "http://localhost:4001/swagger/v1/swagger.json"
+        }
+      ]
+    },
+    {
+      "Key": "no2device",
+      "Config": [
+        {
+          "Name": "NO2DeviceMicroservice",
+          "Version": "v1",
+          "Url": "http://localhost:6001/swagger/v1/swagger.json"
+        }
+      ]
     }
   ],
   "GlobalConfiguration": {

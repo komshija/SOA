@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
+using System.Net.Http;
 
 namespace DeviceMicroservice.Controllers
 {
@@ -34,16 +35,17 @@ namespace DeviceMicroservice.Controllers
             if (sendInterval <= 0)
                 return BadRequest();
             _service.SetSendInterval(sendInterval);
+            _logger.LogInformation("Send interval value has been changed on : {sendInterval}s !",sendInterval);
             return Ok(sendInterval);
         }
 
 
         [Route("/actuator")]
         [HttpPost]
-        public IActionResult ActuatorCO()
+        public IActionResult ActuatorCO([FromBody] string command)
         {
-            _logger.LogInformation("Ukljucen alarm!");
-            return Ok("Ukljucen alarm!");
+            _logger.LogInformation("Command : " + command);
+            return Ok(command);
         }
     }
 }

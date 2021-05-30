@@ -43,7 +43,14 @@ namespace CommandMicroservice
             services.AddSingleton<IMqttSubscriber,MqttSubscriber>();
             services.AddSignalR();
             services.AddTransient<INotificationService, NotificationService>();
-            
+
+            services.AddCors(setupAction =>
+            {
+                setupAction.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3001").AllowCredentials();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -62,7 +69,9 @@ namespace CommandMicroservice
 
             app.UseRouting();
 
-            app.UseAuthorization();
+            app.UseCors();
+
+            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

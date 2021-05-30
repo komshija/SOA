@@ -36,6 +36,13 @@ namespace DataMicroservice
             });
             services.AddSingleton<IRedisClient, RedisClient>();
             services.AddSingleton<IMqttPublisher, MqttPublisher>();
+            services.AddCors(setupAction =>
+            {
+                setupAction.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                });
+            });
 
         }
 
@@ -54,6 +61,8 @@ namespace DataMicroservice
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

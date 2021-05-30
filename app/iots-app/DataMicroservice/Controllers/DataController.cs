@@ -1,5 +1,6 @@
 ﻿using DataMicroservice.Clients;
 using DataMicroservice.Services;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace DataMicroservice.Controllers
 {
+    [EnableCors]
     [ApiController]
     public class DataController : Controller
     {

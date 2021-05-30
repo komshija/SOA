@@ -1,4 +1,5 @@
 ﻿using DeviceMicroservice.Service;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -6,6 +7,7 @@ using System.Net.Http;
 
 namespace DeviceMicroservice.Controllers
 {
+    [EnableCors]
     [ApiController]
     public class DeviceController : Controller
     {

@@ -34,6 +34,14 @@ namespace DeviceMicroservice
                     Description = "Sensor with data of Carbon monoxide."
                 });
             });
+            services.AddCors(setupAction =>
+            {
+                setupAction.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin();
+                });
+            });
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -51,6 +59,8 @@ namespace DeviceMicroservice
             //app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

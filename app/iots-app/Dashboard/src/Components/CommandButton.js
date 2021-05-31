@@ -1,15 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import axios from 'axios';
 import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
+import { useSnackbar } from 'notistack';
 
 const CommandButton = (props) => {
     
     const url = props.url;
     const buttonText = props.buttonText;
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
-    const sendPost = async (e) => {
+
+    const sendPost = async () => {
         const response = await axios.post(url);
+        console.log(response);
+        if(response.status == 200) {
+            enqueueSnackbar("Command activated succesfuly", {
+                anchorOrigin: {
+                    horizontal: 'center',
+                    vertical: 'bottom'
+                },
+                variant: 'success'    
+            });
+        }
     };
    
     return (

@@ -1,8 +1,6 @@
 import { React , useEffect, useState}from 'react'
 import { HubConnectionBuilder } from '@microsoft/signalr';
 import { signalrcommandurl } from '../urls.js';
-import Alert from '@material-ui/lab/Alert';
-import Snackbar from '@material-ui/core/Snackbar';
 import { useSnackbar } from 'notistack';
 
 const Notification = (props) => {

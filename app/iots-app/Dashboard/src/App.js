@@ -1,11 +1,8 @@
+import React from 'react';
 import CommandButton from './Components/CommandButton.js';
 import Display from './Components/Display';
 import {no2commandurl,cocommandurl, getcodataurl,getno2dataurl} from './urls.js';
-import codata from './fakecodata.js';
-import no2data from './fakeno2data.js';
 import Box from '@material-ui/core/Box';
-import Container from '@material-ui/core/Container';
-import '@fontsource/roboto';
 import Typography from '@material-ui/core/Typography';
 import Notification from './Components/Notification.js';
 

@@ -5,8 +5,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5000
+          "Host": "datamicroservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/getco",
@@ -18,8 +18,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5000
+          "Host": "datamicroservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/getno2",
@@ -31,8 +31,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5000
+          "Host": "datamicroservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/greater/{sensor}/{value}",
@@ -44,8 +44,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 5000
+          "Host": "datamicroservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/less/{senosr}/{value}",
@@ -57,8 +57,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7001
+          "Host": "commandmicroservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/cocommand/{command}",
@@ -70,8 +70,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 7001
+          "Host": "commandmicroservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/no2command/{command}",
@@ -79,12 +79,25 @@
       "SwaggerKey": "command"
     },
     {
+      "DownstreamPathTemplate": "/notifications",
+      "DownstreamScheme": "ws",
+      "DownstreamHostAndPorts": [
+        {
+          "Host": "commandmicroservice",
+          "Port": 80
+        }
+      ],
+      "UpstreamPathTemplate": "/api/notifications",
+      "UpstreamHttpMethod": [ "Get", "Post" , "Put", "Delete", "Options" ],
+      "SwaggerKey": "command"
+    },
+    {
       "DownstreamPathTemplate": "/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 4001
+          "Host": "co-sensor-microservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/coinfo",
@@ -96,8 +109,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 4001
+          "Host": "co-sensor-microservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/cosendinterval/{sendInterval}",
@@ -109,8 +122,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6001
+          "Host": "no2-sensor-microservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/no2info",
@@ -122,8 +135,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6001
+          "Host": "no2-sensor-microservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/no2sendinterval/{sendInterval}",
@@ -135,8 +148,8 @@
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "localhost",
-          "Port": 6001
+          "Host": "no2-sensor-microservice",
+          "Port": 80
         }
       ],
       "UpstreamPathTemplate": "/api/no2treshold/{threshold}",
@@ -154,7 +167,7 @@
         {
           "Name": "DataMicroservice",
           "Version": "v1",
-          "Url": "http://localhost:5000/swagger/v1/swagger.json"
+          "Url": "http://datamicroservice:80/swagger/v1/swagger.json"
         }
       ]
     },
@@ -164,7 +177,7 @@
         {
           "Name": "CommandService",
           "Version": "v1",
-          "Url": "http://localhost:7001/swagger/v1/swagger.json"
+          "Url": "http://commandmicroservice:80/swagger/v1/swagger.json"
         }
       ]
     },
@@ -174,7 +187,7 @@
         {
           "Name": "CODeviceMicroservice",
           "Version": "v1",
-          "Url": "http://localhost:4001/swagger/v1/swagger.json"
+          "Url": "http://co-sensor-microservice:80/swagger/v1/swagger.json"
         }
       ]
     },
@@ -184,12 +197,12 @@
         {
           "Name": "NO2DeviceMicroservice",
           "Version": "v1",
-          "Url": "http://localhost:6001/swagger/v1/swagger.json"
+          "Url": "http://no2-sensor-microservice:80/swagger/v1/swagger.json"
         }
       ]
     }
   ],
   "GlobalConfiguration": {
-    "BaseUrl": "https://localhost:5001"
+    "BaseUrl": "https://apigateway:80"
   }
 }

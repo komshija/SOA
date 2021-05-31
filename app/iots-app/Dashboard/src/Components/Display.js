@@ -2,13 +2,11 @@ import {
     React,
     useEffect,
     useState,
-    useReducer,
-    useRef 
+    useReducer
 } from 'react';
-import ReactDOM from "react-dom";
 import axios from 'axios';
-
 import  {LineChart,Line,XAxis,YAxis,Tooltip,CartesianGrid,Legend} from 'recharts';
+
 const Display = (props) => {
 
     const {url,lineName,width,height,displayCount,color} = props;
@@ -30,7 +28,7 @@ const Display = (props) => {
         };
         fetchData();
 
-    }, [data])
+    }, []);
     
     
     return ( 

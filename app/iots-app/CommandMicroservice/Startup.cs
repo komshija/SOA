@@ -29,6 +29,14 @@ namespace CommandMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+			services.AddCors(setupAction =>
+            {
+                setupAction.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://dashboard:3000","http://apigateway:80").AllowCredentials();
+                });
+            });
+			
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
@@ -44,18 +52,13 @@ namespace CommandMicroservice
             services.AddSignalR();
             services.AddTransient<INotificationService, NotificationService>();
 
-            services.AddCors(setupAction =>
-            {
-                setupAction.AddDefaultPolicy(policy =>
-                {
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://localhost:3001").AllowCredentials();
-                });
-            });
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -65,13 +68,10 @@ namespace CommandMicroservice
 
             app.ApplicationServices.GetService<IMqttSubscriber>();
 
-            //app.UseHttpsRedirection();
-
             app.UseRouting();
 
+            app.UseAuthorization();
             app.UseCors();
-
-            //app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

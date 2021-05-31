@@ -28,6 +28,13 @@ namespace APIGateway
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(setupAction =>
+            {
+                setupAction.AddDefaultPolicy(policy =>
+                {
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://dashboard:3000").AllowCredentials();
+                });
+            });
             services.AddOcelot();
             services.AddSwaggerForOcelot(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
@@ -36,13 +43,16 @@ namespace APIGateway
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+
             app.UsePathBase("/gateway");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseStaticFiles();
+            app.UseCors();
+
+            app.UseWebSockets();
 
             app.UseSwaggerForOcelotUI(opt =>
             {

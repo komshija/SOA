@@ -1,7 +1,7 @@
 {
   "Routes": [
     {
-      "DownstreamPathTemplate": "/getco",
+      "DownstreamPathTemplate": "/get/{sensor}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -9,20 +9,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/getco",
-      "UpstreamHttpMethod": [ "Get" ],
-      "SwaggerKey": "data"
-    },
-    {
-      "DownstreamPathTemplate": "/getno2",
-      "DownstreamScheme": "http",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "datamicroservice",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/getno2",
+      "UpstreamPathTemplate": "/api/get/{sensor}",
       "UpstreamHttpMethod": [ "Get" ],
       "SwaggerKey": "data"
     },
@@ -48,25 +35,25 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/less/{senosr}/{value}",
+      "UpstreamPathTemplate": "/api/less/{sensor}/{value}",
       "UpstreamHttpMethod": [ "Get" ],
       "SwaggerKey": "data"
     },
     {
-      "DownstreamPathTemplate": "/cocommand/{command}",
+      "DownstreamPathTemplate": "/getlast/{sensor}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
-          "Host": "commandmicroservice",
+          "Host": "datamicroservice",
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/cocommand/{command}",
-      "UpstreamHttpMethod": [ "Post" ],
-      "SwaggerKey": "command"
+      "UpstreamPathTemplate": "/api/getlast/{sensor}",
+      "UpstreamHttpMethod": [ "Get" ],
+      "SwaggerKey": "data"
     },
     {
-      "DownstreamPathTemplate": "/no2command/{command}",
+      "DownstreamPathTemplate": "/command/{sensor}/{command}",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [
         {
@@ -74,7 +61,7 @@
           "Port": 80
         }
       ],
-      "UpstreamPathTemplate": "/api/no2command/{command}",
+      "UpstreamPathTemplate": "/api/command/{sensor}/{command}",
       "UpstreamHttpMethod": [ "Post" ],
       "SwaggerKey": "command"
     },
@@ -88,7 +75,7 @@
         }
       ],
       "UpstreamPathTemplate": "/api/notifications",
-      "UpstreamHttpMethod": [ "Get", "Post" , "Put", "Delete", "Options" ],
+      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
       "SwaggerKey": "command"
     },
     {

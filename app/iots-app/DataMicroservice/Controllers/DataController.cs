@@ -42,28 +42,18 @@ namespace DataMicroservice.Controllers
         }
 
         [HttpGet]
-        [Route("/getco")]
-        public IActionResult GetCO()
+        [Route("/get/{sensor}")]
+        public IActionResult Get(string sensor)
         {
             try
             {
-                var data = _client.JsonGet("CO");
-                return new OkObjectResult(data);
-            }
-            catch (Exception e)
-            {
+                sensor = sensor.ToUpper();
+                if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
+                {
+                    var data = _client.JsonGet(sensor);
+                    return new OkObjectResult(data);
+                }
                 return new NoContentResult();
-            }
-        }
-
-        [HttpGet]
-        [Route("/getno2")]
-        public IActionResult GetNO2()
-        {
-            try
-            {
-                var data = _client.JsonGet("NO2");
-                return new OkObjectResult(data);
             }
             catch (Exception e)
             {
@@ -103,6 +93,27 @@ namespace DataMicroservice.Controllers
                 {
                     var data = _client.JsonGet(sensor);
                     List<Data> lista = data.Select(item => item.Value).Where(item => item.value < value).ToList();
+                    return new OkObjectResult(lista);
+                }
+                return new NoContentResult();
+            }
+            catch (Exception e)
+            {
+                return new NoContentResult();
+            }
+        }
+
+        [HttpGet]
+        [Route("/getlast/{sensor}")]
+        public IActionResult GetLast(string sensor)
+        {
+            try
+            {
+                sensor = sensor.ToUpper();
+                if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
+                {
+                    var data = _client.JsonGet(sensor);
+                    List<Data> lista = data.Select(item => item.Value).OrderByDescending(x => DateTime.ParseExact(x.date, "dd/MM/yyyy HH:mm:ss", null)).Take(10).ToList();
                     return new OkObjectResult(lista);
                 }
                 return new NoContentResult();

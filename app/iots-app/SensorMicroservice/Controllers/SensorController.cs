@@ -43,7 +43,7 @@ namespace SensorMicroservice.Controllers
             if (sendInterval <= 0)
                 return BadRequest();
             _service.SetSendInterval(sendInterval);
-            _logger.LogInformation("Send interval value has been changed on : {sendInterval}s !" + sendInterval);
+            _logger.LogInformation("Send interval value has been changed on : {sendInterval}s !",sendInterval);
             return Ok(sendInterval);
         }
 
@@ -54,7 +54,7 @@ namespace SensorMicroservice.Controllers
             if (threshold <= 2)
                 return BadRequest();
             _service.SetThreshold(threshold);
-            _logger.LogInformation("Threshold value has been changed on : {threshold} !" + threshold);
+            _logger.LogInformation("Threshold value has been changed on : {threshold} !",threshold);
             return Ok(threshold);
         }
 

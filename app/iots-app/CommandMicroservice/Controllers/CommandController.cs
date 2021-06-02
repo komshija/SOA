@@ -23,27 +23,28 @@ namespace CommandMicroservice.Controllers
         }
 
         [HttpPost]
-        [Route("/cocommand/{command}")]
-        public IActionResult COCommand(string command)
+        [Route("/command/{sensor}/{command}")]
+        public IActionResult Command(string sensor,string command)
         {
-            if (command.CompareTo("") == 0)
-                return BadRequest();
-            
-            _actuatorClient.PostOnCOActuator(command);
-            _notificationService.SendNotification("CO command activated : " + command);
-            return Ok(command);
-        }
+            try
+            {
+                sensor = sensor.ToUpper();
+                if (command.CompareTo("") != 0 && (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0))
+                {
+                    if (sensor.CompareTo("CO") == 0)
+                        _actuatorClient.PostOnCOActuator(command);
+                    else
+                        _actuatorClient.PostOnNO2Actuator(command);
+                    _notificationService.SendNotification(sensor + " command activated : " + command);
+                    return Ok(command);
+                }
 
-        [HttpPost]
-        [Route("/no2command/{command}")]
-        public IActionResult NO2Command(string command)
-        {
-            if (command.CompareTo("") == 0)
                 return BadRequest();
-
-            _actuatorClient.PostOnNO2Actuator(command);
-            _notificationService.SendNotification("NO2 command activated : " + command);
-            return Ok(command);
+            }
+            catch(Exception e)
+            {
+                return BadRequest();
+            }
         }
     }
 }

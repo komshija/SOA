@@ -12,15 +12,27 @@ const CommandButton = (props) => {
 
 
     const sendPost = async () => {
-        const response = await axios.post(url);
-        console.log(response);
-        if(response.status == 200) {
-            enqueueSnackbar("Command activated succesfuly", {
+        try {
+
+            const response = await axios.post(url);
+            console.log(response);
+            if(response.status == 200) {
+                enqueueSnackbar("Command activated succesfuly", {
+                    anchorOrigin: {
+                        horizontal: 'center',
+                        vertical: 'bottom'
+                    },
+                    variant: 'success'    
+                });
+            }
+        }
+        catch {
+            enqueueSnackbar("Error sending command", {
                 anchorOrigin: {
                     horizontal: 'center',
                     vertical: 'bottom'
                 },
-                variant: 'success'    
+                variant: 'error'    
             });
         }
     };

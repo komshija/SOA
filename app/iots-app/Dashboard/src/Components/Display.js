@@ -6,6 +6,8 @@ import {
 } from 'react';
 import axios from 'axios';
 import  {LineChart,Line,XAxis,YAxis,Tooltip,CartesianGrid,Legend} from 'recharts';
+import Typography from '@material-ui/core/Typography';
+import Box from '@material-ui/core/Box';
 
 const Display = (props) => {
 
@@ -26,14 +28,21 @@ const Display = (props) => {
                 
             }
         };
-        fetchData();
+        fetchData(); //initial fetch
+
+        // const interval = setInterval(() => fetchData(), 5000);
+        // return () => {
+        //     clearInterval(interval);
+        // };
 
     }, []);
     
     
     return ( 
         <div>
-           
+                <Box display="flex" justifyContent="center" flexWrap="wrap" marginBottom={1}>
+                    <Typography variant='h5'>{lineName}</Typography>
+                </Box>
             
                 <LineChart
                 width={width}

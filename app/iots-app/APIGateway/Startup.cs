@@ -14,6 +14,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
+
 namespace APIGateway
 {
     public class Startup
@@ -32,12 +33,13 @@ namespace APIGateway
             {
                 setupAction.AddDefaultPolicy(policy =>
                 {
-                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://dashboard:3000").AllowCredentials();
+                    policy.AllowAnyMethod().AllowAnyHeader().WithOrigins("http://dashboard:80").AllowCredentials();
                 });
             });
             services.AddOcelot();
             services.AddSwaggerForOcelot(Configuration);
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

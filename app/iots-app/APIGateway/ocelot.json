@@ -66,19 +66,6 @@
       "SwaggerKey": "command"
     },
     {
-      "DownstreamPathTemplate": "/notifications/{catchAll}",
-      "DownstreamScheme": "ws",
-      "DownstreamHostAndPorts": [
-        {
-          "Host": "commandmicroservice",
-          "Port": 80
-        }
-      ],
-      "UpstreamPathTemplate": "/api/notifications/{catchAll}",
-      "UpstreamHttpMethod": [ "Get", "Post", "Put", "Delete", "Options" ],
-      "SwaggerKey": "command"
-    },
-    {
       "DownstreamPathTemplate": "/",
       "DownstreamScheme": "http",
       "DownstreamHostAndPorts": [

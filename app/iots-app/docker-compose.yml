@@ -149,6 +149,7 @@ services:
         networks:
             - internal
         depends_on:
+            - commandmicroservice
             - apigateway
         ports:
           - "8080:80"

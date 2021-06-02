@@ -11,14 +11,13 @@ import Box from '@material-ui/core/Box';
 
 const Display = (props) => {
 
-    const {url,lineName,width,height,displayCount,color} = props;
+    const {url,lineName,width,height,color} = props;
     const [renderCount,setRenderCount] = useReducer(x => x + 1, 0);
     const [data,setData] = useState([]);
 
     
     useEffect(() => {
         const fetchData = async () => {
-            
             try {
                 const response = await axios.get(url);
                 setData(response.data);

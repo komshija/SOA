@@ -21,7 +21,7 @@ const Display = (props) => {
             
             try {
                 const response = await axios.get(url);
-                setData(response.data.reverse().slice(Math.max(response.data.length - displayCount, 0)));
+                setData(response.data);
                 setRenderCount();
             }
             catch {
@@ -30,10 +30,10 @@ const Display = (props) => {
         };
         fetchData(); //initial fetch
 
-        // const interval = setInterval(() => fetchData(), 5000);
-        // return () => {
-        //     clearInterval(interval);
-        // };
+        const interval = setInterval(() => fetchData(), 5000);
+        return () => {
+            clearInterval(interval);
+        };
 
     }, []);
     
@@ -55,7 +55,7 @@ const Display = (props) => {
                     <YAxis />
                     <Tooltip />
                     <Legend />
-                    <Line type="monotone" isAnimationActive={false} dataKey="value.value" name={lineName} stroke={color} />
+                    <Line type="monotone" isAnimationActive={false} dataKey="value" name={lineName} stroke={color} />
                 </LineChart>
                 
         </div>

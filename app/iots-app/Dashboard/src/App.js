@@ -26,12 +26,12 @@ function App() {
               <Display key="NO2" width={600} height={250} lineName="NO2" displayCount={10} url={getno2dataurl} color="#00FF00"/>
             </Box>
 
-            <Box margin={2.5}>
+            {/* <Box margin={2.5}>
               <DisplayAdvanced key="CO" width={600} height={250} lineName="CO" displayCount={10} url={getcodataurl} color="#FF0000"/>
             </Box>
             <Box margin={2.5}>
               <DisplayAdvanced key="NO2" width={600} height={250} lineName="NO2" displayCount={10} url={getno2dataurl} color="#00FF00"/>
-            </Box>
+            </Box> */}
 
           </Box>
 

@@ -50,7 +50,7 @@ namespace DataMicroservice.Controllers
                 sensor = sensor.ToUpper();
                 if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
                 {
-                    var data = _client.JsonGet(sensor);
+                    var data = _client.JsonGet(sensor).Select(item => item.Value).OrderByDescending(x => DateTime.ParseExact(x.date, "dd/MM/yyyy HH:mm:ss", null)).ToList();
                     return new OkObjectResult(data);
                 }
                 return new NoContentResult();
@@ -70,9 +70,8 @@ namespace DataMicroservice.Controllers
                 sensor = sensor.ToUpper();
                 if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
                 {
-                    var data = _client.JsonGet(sensor);
-                    List<Data> lista = data.Select(item => item.Value).Where(item => item.value >= value).ToList();
-                    return new OkObjectResult(lista);
+                    var data = _client.JsonGet(sensor).Select(item => item.Value).Where(item => item.value >= value).OrderByDescending(x => DateTime.ParseExact(x.date, "dd/MM/yyyy HH:mm:ss", null)).ToList(); ;
+                    return new OkObjectResult(data);
                 }
                 return new NoContentResult();
             }
@@ -91,9 +90,8 @@ namespace DataMicroservice.Controllers
                 sensor = sensor.ToUpper();
                 if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
                 {
-                    var data = _client.JsonGet(sensor);
-                    List<Data> lista = data.Select(item => item.Value).Where(item => item.value < value).ToList();
-                    return new OkObjectResult(lista);
+                    var data = _client.JsonGet(sensor).Select(item => item.Value).Where(item => item.value < value).OrderByDescending(x => DateTime.ParseExact(x.date, "dd/MM/yyyy HH:mm:ss", null)).ToList(); ;
+                    return new OkObjectResult(data);
                 }
                 return new NoContentResult();
             }
@@ -112,9 +110,8 @@ namespace DataMicroservice.Controllers
                 sensor = sensor.ToUpper();
                 if (sensor.CompareTo("CO") == 0 || sensor.CompareTo("NO2") == 0)
                 {
-                    var data = _client.JsonGet(sensor);
-                    List<Data> lista = data.Select(item => item.Value).OrderByDescending(x => DateTime.ParseExact(x.date, "dd/MM/yyyy HH:mm:ss", null)).Take(10).ToList();
-                    return new OkObjectResult(lista);
+                    var data = _client.JsonGet(sensor).Select(item => item.Value).OrderByDescending(x => DateTime.ParseExact(x.date, "dd/MM/yyyy HH:mm:ss", null)).Take(10).ToList(); ;
+                    return new OkObjectResult(data);
                 }
                 return new NoContentResult();
             }

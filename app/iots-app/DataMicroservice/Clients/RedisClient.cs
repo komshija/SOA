@@ -25,7 +25,6 @@ namespace DataMicroservice.Clients
             {
                 EndPoints = { { host, port }, },
                 AllowAdmin = allowAdmin,
-                //Password = "", //to the security for the production
                 ClientName = "Data Client",
                 ReconnectRetryPolicy = new LinearRetry(5000),
                 AbortOnConnectFail = false,
@@ -33,14 +32,10 @@ namespace DataMicroservice.Clients
             _Connection = new Lazy<IConnectionMultiplexer>(() =>
             {
                 ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration);
-                //redis.ErrorMessage += _Connection_ErrorMessage;
-                //redis.InternalError += _Connection_InternalError;
-                //redis.ConnectionFailed += _Connection_ConnectionFailed;
-                //redis.ConnectionRestored += _Connection_ConnectionRestored;
                 return redis;
             });
             if(Database.IsConnected("localhost"))
-                logger.LogInformation("Redis connection established!");
+                _logger.LogInformation("Redis connection established!");
         }
 
         public List<KeyValuePair<string, DataController.Data>> JsonGet(RedisKey key, CommandFlags flags = CommandFlags.None)

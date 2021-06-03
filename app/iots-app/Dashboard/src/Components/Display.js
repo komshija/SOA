@@ -14,6 +14,23 @@ const Display = (props) => {
     const {url,lineName,width,height,color} = props;
     const [renderCount,setRenderCount] = useReducer(x => x + 1, 0);
     const [data,setData] = useState([]);
+    const [info, setInfo] = useState({
+        min:0,
+        max:0,
+        avg:0
+    });
+
+    const getInfo = () => {
+        const min = Math.min.apply(Math, data.map(d => d.value));
+        const max = Math.max.apply(Math, data.map(d => d.value));
+        const avg = data.reduce((sum, d) => sum += d.value, 0) / data.length;
+        setInfo({
+            min: min,
+            max: max,
+            avg: avg
+        });
+        return info;
+    };
 
     
     useEffect(() => {
@@ -21,6 +38,7 @@ const Display = (props) => {
             try {
                 const response = await axios.get(url);
                 setData(response.data);
+                getInfo();
                 setRenderCount();
             }
             catch {
@@ -56,6 +74,24 @@ const Display = (props) => {
                     <Legend />
                     <Line type="monotone" isAnimationActive={false} dataKey="value" name={lineName} stroke={color} />
                 </LineChart>
+
+                <Box display="flex" justifyContent="center">
+                    <Box margin={1}>
+                        <Typography variant="caption">
+                        Min: {info.min}
+                        </Typography>
+                    </Box>
+                    <Box margin={1}>
+                        <Typography variant="caption">
+                        Max: {info.max}
+                        </Typography>
+                    </Box>
+                    <Box margin={1}>
+                        <Typography variant="caption">
+                        Avg: {info.avg}
+                        </Typography>
+                    </Box>
+                </Box>
                 
         </div>
     )

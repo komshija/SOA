@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Net.Http;
 
@@ -20,6 +21,8 @@ namespace DeviceMicroservice.Controllers
         }
         [Route("/")]
         [HttpGet]
+        [SwaggerOperation("Returns all information about CO sensor","Returns name, description and data send interval.")]
+        [SwaggerResponse(200)]
         public IActionResult GetInfo()
         {
             return new OkObjectResult(new
@@ -32,6 +35,9 @@ namespace DeviceMicroservice.Controllers
 
         [Route("/{sendInterval}")]
         [HttpPost]
+        [SwaggerOperation("Sets data send interval.","Interval must be greater then zero.")]
+        [SwaggerResponse(200, "Everything is okey.")]
+        [SwaggerResponse(400,"Interval is negative number.")]
         public IActionResult ChangeSendInterval(int sendInterval)
         {
             if (sendInterval <= 0)
@@ -44,6 +50,8 @@ namespace DeviceMicroservice.Controllers
 
         [Route("/actuator")]
         [HttpPost]
+        [SwaggerOperation("Sets command to virtual actuator.", "Logs command to console.")]
+        [SwaggerResponse(200)]
         public IActionResult ActuatorCO([FromBody] string command)
         {
             _logger.LogInformation("Command : " + command);

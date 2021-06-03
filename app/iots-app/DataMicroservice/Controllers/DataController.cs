@@ -3,6 +3,7 @@ using DataMicroservice.Services;
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,21 +29,35 @@ namespace DataMicroservice.Controllers
 
         [HttpPost]
         [Route("/sensordata")]
+        [SwaggerOperation(Summary = "Receive data from sensors", Description = "Data can be type of CO or NO2")]
+        [SwaggerResponse(200, "Everything is ok.")]
+        [SwaggerResponse(204, "Something went wrong.")]
         public IActionResult SensorData([FromBody] Data sensorData)
         {
-            _client.JsonSet(sensorData.dataName, sensorData.date, sensorData);
-            var mqttValue = new IMqttPublisher.Data(sensorData.date, sensorData.value, sensorData.dataName);
-            if (sensorData.dataName.CompareTo("CO") == 0)
-                _mqttPublisher.COMqttPublish(mqttValue);
-            else
-                _mqttPublisher.NO2MqttPublish(mqttValue);
+            try
+            {
+                _client.JsonSet(sensorData.dataName, sensorData.date, sensorData);
+                var mqttValue = new IMqttPublisher.Data(sensorData.date, sensorData.value, sensorData.dataName);
+                if (sensorData.dataName.CompareTo("CO") == 0)
+                    _mqttPublisher.COMqttPublish(mqttValue);
+                else
+                    _mqttPublisher.NO2MqttPublish(mqttValue);
 
-            _logger.LogInformation(sensorData.dataName + " data received: {data} that was generated : {date}", sensorData.value, sensorData.date);
-            return Ok(sensorData);
+                _logger.LogInformation(sensorData.dataName + " data received: {data} that was generated : {date}", sensorData.value, sensorData.date);
+                return Ok(sensorData);
+            }
+            catch(Exception e)
+            {
+                _logger.LogError(e.ToString());
+                return new NoContentResult();
+            }
         }
 
         [HttpGet]
         [Route("/get/{sensor}")]
+        [SwaggerOperation(Summary = "Returns all data from sensors", Description = "Sensor data can be from CO or NO2 sensor.")]
+        [SwaggerResponse(200, "Everything is ok.")]
+        [SwaggerResponse(204, "Something went wrong.")]
         public IActionResult Get(string sensor)
         {
             try
@@ -57,12 +72,16 @@ namespace DataMicroservice.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e.ToString());
                 return new NoContentResult();
             }
         }
 
         [HttpGet]
         [Route("/greater/{sensor}/{value}")]
+        [SwaggerOperation(Summary = "Returns all data grater then value from sensors", Description = "Sensor data can be from CO or NO2 sensor.")]
+        [SwaggerResponse(200, "Everything is ok.")]
+        [SwaggerResponse(204, "Something went wrong.")]
         public IActionResult GetGreater(string sensor, int value)
         {
             try
@@ -77,12 +96,16 @@ namespace DataMicroservice.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e.ToString());
                 return new NoContentResult();
             }
         }
 
         [HttpGet]
         [Route("/less/{sensor}/{value}")]
+        [SwaggerOperation(Summary = "Returns all data less then value from sensors", Description = "Sensor data can be from CO or NO2 sensor.")]
+        [SwaggerResponse(200, "Everything is ok.")]
+        [SwaggerResponse(204, "Something went wrong.")]
         public IActionResult GetLess(string sensor, int value)
         {
             try
@@ -97,12 +120,16 @@ namespace DataMicroservice.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e.ToString());
                 return new NoContentResult();
             }
         }
 
         [HttpGet]
         [Route("/getlast/{sensor}")]
+        [SwaggerOperation(Summary = "Returns last 10 values from sensor.", Description = "Sensor data can be from CO or NO2 sensor.")]
+        [SwaggerResponse(200, "Everything is ok.")]
+        [SwaggerResponse(204, "Something went wrong.")]
         public IActionResult GetLast(string sensor)
         {
             try
@@ -117,6 +144,7 @@ namespace DataMicroservice.Controllers
             }
             catch (Exception e)
             {
+                _logger.LogError(e.ToString());
                 return new NoContentResult();
             }
         }

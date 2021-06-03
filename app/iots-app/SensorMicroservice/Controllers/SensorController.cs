@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using SensorMicroservice.Service;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,6 +26,9 @@ namespace SensorMicroservice.Controllers
 
         [Route("/")]
         [HttpGet]
+        [HttpGet]
+        [SwaggerOperation("Returns all information about NO2 sensor.", "Returns name, description, data send interval and data send treshold.")]
+        [SwaggerResponse(200)]
         public IActionResult GetInfo()
         {
             return new OkObjectResult(new
@@ -38,6 +42,9 @@ namespace SensorMicroservice.Controllers
 
         [Route("/interval/{sendInterval}")]
         [HttpPost]
+        [SwaggerOperation("Sets data send interval.", "Interval must be greater then zero.")]
+        [SwaggerResponse(200, "Everything is okey.")]
+        [SwaggerResponse(400, "Interval is negative number.")]
         public IActionResult ChangeSendInterval(int sendInterval)
         {
             if (sendInterval <= 0)
@@ -49,6 +56,9 @@ namespace SensorMicroservice.Controllers
 
         [Route("/treshold/{threshold}")]
         [HttpPost]
+        [SwaggerOperation("Sets data treshold.", "Interval must be greater then two.")]
+        [SwaggerResponse(200, "Everything is okey.")]
+        [SwaggerResponse(400, "Interval is less then two number.")]
         public IActionResult ChangeThreshold(double threshold)
         {
             if (threshold <= 2)
@@ -60,6 +70,8 @@ namespace SensorMicroservice.Controllers
 
         [Route("/actuator")]
         [HttpPost]
+        [SwaggerOperation("Sets command to virtual actuator.", "Logs command to console.")]
+        [SwaggerResponse(200)]
         public IActionResult ActuatorNO2([FromBody] string command)
         {
             _logger.LogInformation("Command : " + command);

@@ -33,6 +33,7 @@ namespace DeviceMicroservice
                     Version = "v1",
                     Description = "Sensor with data of Carbon monoxide."
                 });
+                c.EnableAnnotations();
             });
             services.AddCors(setupAction =>
             {

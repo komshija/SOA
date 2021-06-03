@@ -43,8 +43,10 @@ namespace CommandMicroservice
                 c.SwaggerDoc("v1", new OpenApiInfo 
                 { 
                     Title = "Command Microservice",
-                    Version = "v1"
+                    Version = "v1",
+                    Description = "Command Microservice is listening for events and sends commands to virtual actuators."
                 });
+                c.EnableAnnotations();
             });
 
             services.AddHttpClient<ActuatorClient>();

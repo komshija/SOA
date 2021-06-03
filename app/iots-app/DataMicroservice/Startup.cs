@@ -32,7 +32,12 @@ namespace DataMicroservice
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "DataMicroservice", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo 
+                { Title = "Data Microservice",
+                  Version = "v1",
+                  Description = "Data microservice stores all of data received from sensors."
+                });
+                c.EnableAnnotations();
             });
             services.AddSingleton<IRedisClient, RedisClient>();
             services.AddSingleton<IMqttPublisher, MqttPublisher>();
@@ -53,7 +58,7 @@ namespace DataMicroservice
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "DataMicroservice v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "Data Microservice v1"));
             }
 
             app.ApplicationServices.GetService<IMqttPublisher>();

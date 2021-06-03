@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,19 @@ namespace CommandMicroservice.Controllers
     {
         private readonly ActuatorClient _actuatorClient;
         private readonly INotificationService _notificationService;
-
-        public CommandController(ActuatorClient actuatorClient, INotificationService notificationService)
+        private readonly ILogger<CommandController> _logger;
+        public CommandController(ActuatorClient actuatorClient, INotificationService notificationService, ILogger<CommandController> logger)
         {
             _actuatorClient = actuatorClient;
             _notificationService = notificationService;
+            _logger = logger;
         }
 
         [HttpPost]
         [Route("/command/{sensor}/{command}")]
+        [SwaggerOperation("Sends command to virtual actuator","Virtual actuator can be for CO or NO2 sensor.")]
+        [SwaggerResponse(200, "Everything is okey.")]
+        [SwaggerResponse(400, "Something went wrong.")]
         public IActionResult Command(string sensor,string command)
         {
             try
@@ -43,6 +48,7 @@ namespace CommandMicroservice.Controllers
             }
             catch(Exception e)
             {
+                _logger.LogError(e.ToString());
                 return BadRequest();
             }
         }

@@ -34,6 +34,7 @@ namespace SensorMicroservice
                     Description = "Sensor with data of Nitrogen dioxide.",
                     Version = "v1"
                 });
+                c.EnableAnnotations();
             });
 
             services.AddCors(setupAction =>

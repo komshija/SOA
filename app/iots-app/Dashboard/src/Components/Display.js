@@ -77,18 +77,18 @@ const Display = (props) => {
 
                 <Box display="flex" justifyContent="center">
                     <Box margin={1}>
-                        <Typography variant="caption">
-                        Min: {info.min}
+                        <Typography variant="caption" key={renderCount}>
+                        Min: {Math.min.apply(Math, data.map(d => d.value))}
                         </Typography>
                     </Box>
                     <Box margin={1}>
-                        <Typography variant="caption">
-                        Max: {info.max}
+                        <Typography variant="caption" key={renderCount}>
+                        Max: {Math.max.apply(Math, data.map(d => d.value))}
                         </Typography>
                     </Box>
                     <Box margin={1}>
-                        <Typography variant="caption">
-                        Avg: {info.avg}
+                        <Typography variant="caption" key={renderCount}>
+                        Avg: {data.reduce((sum, d) => sum += d.value, 0) / data.length}
                         </Typography>
                     </Box>
                 </Box>

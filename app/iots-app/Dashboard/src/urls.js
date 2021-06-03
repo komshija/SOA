@@ -1,5 +1,5 @@
-const no2commandurl = "/api/command/co";
-const cocommandurl = "/api/command/no2";
+const no2commandurl = "/api/command/no2";
+const cocommandurl = "/api/command/co";
 const getcodataurl = "/api/getlast/co";
 const getno2dataurl = "/api/getlast/no2";
 const cointerval = "/api/cosendinterval";

@@ -11,23 +11,26 @@ using MQTTnet.Client.Options;
 using Microsoft.Extensions.Logging;
 using System.Text;
 using CommandMicroservice.Hubs;
+using CommandMicroservice.Configuration;
+using Microsoft.Extensions.Options;
 
 namespace CommandMicroservice.Services
 {
     public class MqttSubscriber : IMqttSubscriber
     {
-        private static string coTopic = "device/co/command";
-        private static string no2Topic = "device/no2/command";
+
         private IMqttClient mqttClient;
         private readonly ActuatorClient _actuatorClient;
         private readonly ILogger<MqttSubscriber> _logger;
         private readonly INotificationService _notificationService;
+        private readonly ConfigurationSettings _settings;
 
-        public MqttSubscriber(ActuatorClient actuatorClient, ILogger<MqttSubscriber> logger, INotificationService notificationService)
+        public MqttSubscriber(ActuatorClient actuatorClient, ILogger<MqttSubscriber> logger, INotificationService notificationService, IOptions<ConfigurationSettings> settings)
         {
             _logger = logger;
             _actuatorClient = actuatorClient;
             _notificationService = notificationService;
+            _settings = settings.Value;
             ConnectToMqtt().GetAwaiter().GetResult();
 
         }
@@ -46,6 +49,7 @@ namespace CommandMicroservice.Services
                 }
                 catch (Exception e)
                 {
+                    _logger.LogError(e.ToString());
                     _logger.LogInformation("Failed to connect to MQTT broker. Waiting 10 sec");
                     await Task.Delay(TimeSpan.FromSeconds(10));
                     _logger.LogInformation("Trying again to connect to MQTT broker");
@@ -54,8 +58,8 @@ namespace CommandMicroservice.Services
             if (mqttClient.IsConnected)
             {
                 _logger.LogInformation("Connected to MQTT broker.");
-                await mqttClient.SubscribeAsync(coTopic);
-                await mqttClient.SubscribeAsync(no2Topic);
+                await mqttClient.SubscribeAsync(_settings.CO_TOPIC_COMMAND);
+                await mqttClient.SubscribeAsync(_settings.NO2_TOPIC_COMMAND);
 
                 mqttClient.UseApplicationMessageReceivedHandler(e =>
                 {
@@ -94,9 +98,9 @@ namespace CommandMicroservice.Services
 
         private int getTopicId(string topic)
         {
-            if (topic.CompareTo(coTopic) == 0)
+            if (topic.CompareTo(_settings.CO_TOPIC_COMMAND) == 0)
                 return 0;
-            if (topic.CompareTo(no2Topic) == 0)
+            if (topic.CompareTo(_settings.NO2_TOPIC_COMMAND) == 0)
                 return 1;
             return -1;
         }

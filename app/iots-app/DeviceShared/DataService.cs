@@ -10,6 +10,9 @@ using System.Threading.Tasks;
 
 namespace DeviceShared
 {
+    /// <summary>
+    /// Klasa predstavlja servis koji na sendinterval bira nasumican podatak iz .csv fajla i preko DataClienta salje podatke na Data Microservice
+    /// </summary>
     public class DataService : IDisposable
     {
         #region Fields

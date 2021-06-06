@@ -14,6 +14,8 @@ using System.Threading.Tasks;
 using MQTTnet.Client;
 using CommandMicroservice.Services;
 using CommandMicroservice.Hubs;
+using Polly;
+using CommandMicroservice.Configuration;
 
 namespace CommandMicroservice
 {
@@ -29,7 +31,8 @@ namespace CommandMicroservice
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-			services.AddCors(setupAction =>
+            services.Configure<ConfigurationSettings>(Configuration.GetSection(nameof(ConfigurationSettings)));
+            services.AddCors(setupAction =>
             {
                 setupAction.AddDefaultPolicy(policy =>
                 {

@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace DeviceShared
 {
+    /// <summary>
+    /// Klasa predstavlja red koji se cita iz .csv fajla
+    /// </summary>
     [IgnoreFirst]
     [DelimitedRecord(";")]
     [IgnoreEmptyLines]

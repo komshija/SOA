@@ -9,11 +9,16 @@ using System.Threading.Tasks;
 
 namespace DeviceShared
 {
+    /// <summary>
+    /// Data client je base klasa koja salje podatke na data microservice 
+    /// </summary>
     public class DataClient
     {
+        #region Members
         private readonly HttpClient _httpClient;
         private readonly DataClientSettings _clientSettings;
         private readonly ILogger<DataClient> _logger;
+        #endregion
 
         public DataClient(HttpClient httpClient, IOptions<DataClientSettings> options, ILogger<DataClient> logger)
         {
@@ -22,6 +27,7 @@ namespace DeviceShared
             _clientSettings = options.Value;
         }
 
+        #region Methods
         public async Task PostOnDataClientAsync(SensorData data, string value)
         {
             try
@@ -32,10 +38,12 @@ namespace DeviceShared
             }
             catch(Exception e)
             {
+                _logger.LogError(e.ToString());
                 _logger.LogInformation("Failed to post to Data microservice");
                 
             }
         }
+        #endregion
 
         record Data(string date, decimal value,string dataName);
     }

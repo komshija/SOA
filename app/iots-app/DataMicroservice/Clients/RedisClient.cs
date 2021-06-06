@@ -34,7 +34,7 @@ namespace DataMicroservice.Clients
                 ConnectionMultiplexer redis = ConnectionMultiplexer.Connect(configuration);
                 return redis;
             });
-            if(Database.IsConnected("localhost"))
+            if(Database.IsConnected("redis"))
                 _logger.LogInformation("Redis connection established!");
         }
 

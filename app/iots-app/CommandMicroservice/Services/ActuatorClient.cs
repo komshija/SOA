@@ -1,4 +1,6 @@
-﻿using Microsoft.Extensions.Logging;
+﻿using CommandMicroservice.Configuration;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,21 +14,24 @@ namespace CommandMicroservice.Services
     {
         private readonly HttpClient _httpClient;
         private readonly ILogger<ActuatorClient> _logger;
-        public ActuatorClient(HttpClient httpClient, ILogger<ActuatorClient> logger)
+        private readonly ConfigurationSettings _settings;
+        public ActuatorClient(HttpClient httpClient, ILogger<ActuatorClient> logger,IOptions<ConfigurationSettings> settings)
         {
             _httpClient = httpClient;
             _logger = logger;
+            _settings = settings.Value;
         }
 
         public async void PostOnCOActuator(string command)
         {
             try
             {
-                await _httpClient.PostAsJsonAsync("http://co-sensor-microservice:80/actuator", command);
+                await _httpClient.PostAsJsonAsync(_settings.CO_ACTUATOR_URL, command);
                 _logger.LogInformation("===== Command sucessfuly activated on CO actuator! =====");
             }
             catch(Exception e)
             {
+                _logger.LogError(e.ToString());
                 _logger.LogInformation("Command failed to activate on CO actuator!");
             }
         }
@@ -35,11 +40,12 @@ namespace CommandMicroservice.Services
         {
             try
             {
-                await _httpClient.PostAsJsonAsync("http://no2-sensor-microservice:80/actuator", command);
+                await _httpClient.PostAsJsonAsync(_settings.NO2_ACTUATOR_URL, command);
                 _logger.LogInformation("===== Command sucessfuly activated on NO2 actuator! =====");
             }
             catch(Exception e)
             {
+                _logger.LogError(e.ToString());
                 _logger.LogInformation("Command failed to activate on NO2 actuator!");
             }
         }

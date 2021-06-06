@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Swashbuckle.AspNetCore.Annotations;
 using System;
 using System.Net.Http;
-//samo da proverim jel oce git
+
 namespace DeviceMicroservice.Controllers
 {
     [EnableCors]

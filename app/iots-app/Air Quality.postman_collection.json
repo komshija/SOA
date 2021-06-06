@@ -1,0 +1,356 @@
+{
+	"info": {
+		"_postman_id": "94367bd4-cea0-44b6-9d67-0b1587d2fe4a",
+		"name": "Air Quality",
+		"description": "Air Quality",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "NO2 Sensor",
+			"item": [
+				{
+					"name": "No2 Set Treshold",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/no2treshold/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"no2treshold",
+								"5"
+							],
+							"query": [
+								{
+									"key": null,
+									"value": "",
+									"disabled": true
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NO2 Set Send Interval",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/no2sendinterval/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"no2sendinterval",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "NO2 Get Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/no2info",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"no2info"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "CO Sensor",
+			"item": [
+				{
+					"name": "CO Set Send Interval",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/cosendinterval/5",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"cosendinterval",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "CO Get Info",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/coinfo",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"coinfo"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Command",
+			"item": [
+				{
+					"name": "Send CO Command",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/command/co/Komanda",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"command",
+								"co",
+								"Komanda"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Send NO2 Command",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/command/no2/Komanda",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"command",
+								"no2",
+								"Komanda"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data",
+			"item": [
+				{
+					"name": "Get CO All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/get/co",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"get",
+								"co"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get NO2 All",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/get/no2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"get",
+								"no2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get NO2 Greater Then",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/greater/co/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"greater",
+								"co",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get NO2 Less Then",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/less/co/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"less",
+								"co",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CO Greater Then",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/greater/co/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"greater",
+								"co",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CO Less Then",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/less/co/4",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"less",
+								"co",
+								"4"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get CO Last 10",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/getlast/co",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"getlast",
+								"co"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get NO2 Last 10",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3500/api/getlast/no2",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3500",
+							"path": [
+								"api",
+								"getlast",
+								"no2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}

@@ -14,7 +14,6 @@ using System.Threading.Tasks;
 using MQTTnet.Client;
 using CommandMicroservice.Services;
 using CommandMicroservice.Hubs;
-using Polly;
 using CommandMicroservice.Configuration;
 
 namespace CommandMicroservice

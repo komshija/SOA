@@ -6,13 +6,17 @@ import { useSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 
 const SetValue = (props) => {
-    const {url, fieldId, labelText, type, helperText, buttonText, successNotifText, failNotifText} = props;
+    const {url, fieldId, labelText, type, helperText, buttonText, successNotifText, failNotifText, check} = props;
     const [text, setText] = useState(5);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const sendPost = async () => {
         try {
-            // console.log(text);
+           
+            if(check !== null) {
+                if(check(parseFloat(text)))
+                   throw("Value not valid.");
+            }
             const response = await axios.post(url.concat(`/${text}`));
             console.log(response);
             if(response.status == 200) {
@@ -26,11 +30,11 @@ const SetValue = (props) => {
             }
             else
             {
-                throw "error";
+                throw "Error in request.";
             }
         }
-        catch {
-            enqueueSnackbar(failNotifText, {
+        catch(e) {
+            enqueueSnackbar(failNotifText.concat('\n').concat(e), {
                 anchorOrigin: {
                     horizontal: 'center',
                     vertical: 'bottom'
@@ -47,7 +51,7 @@ const SetValue = (props) => {
                 <TextField 
                 value={text}
                 onChange={event => setText(event.target.value)}
-                error={RegExp("[^0-9]").test(text) || parseInt(text) <= 0}
+                error={RegExp("[^0-9.]").test(text) || parseFloat(text) <= 0}
                 id={fieldId}
                 label={labelText}
                 variant="outlined"

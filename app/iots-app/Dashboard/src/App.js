@@ -10,6 +10,10 @@ import SetValue from './Components/SetValue.js';
 
 
 function App() {
+  const thresholdCheck = (value) => {
+    return value <= 0 || value > 1;
+  };
+
   return (
     <div className="App">
       
@@ -40,9 +44,9 @@ function App() {
           <Box padding={0.5} display="flex" flexDirection="row" borderRadius={15} flexWrap="wrap" justifyContent="center">
             <CommandButton buttonText="Turn on NO2 alarm" url={no2commandurl.concat("/Turn on NO2 Alarm.")} />
             <CommandButton buttonText="Turn on CO alarm" url={cocommandurl.concat("/Turn on CO Alarm.")} />
-            <SetValue url={cointerval} buttonText="Set CO interval" fieldId="interval-co" labelText="CO send interval" type="number" helperText="Error!" successNotifText="Succesfuly set CO interval!" failNotifText="Error on setting CO interval!" />
-            <SetValue url={no2interval} buttonText="Set NO2 interval" fieldId="interval-no2" labelText="NO2 send interval" type="number" helperText="Error!" successNotifText="Succesfuly set NO2 interval!" failNotifText="Error on setting NO2 interval!" />
-            <SetValue url={no2treshold} buttonText="Set NO2 treshold" fieldId="treshold-no2" labelText="NO2 treshold" type="number" helperText="Error!" successNotifText="Succesfuly set NO2 treshold!" failNotifText="Error on setting NO2 treshold!" />
+            <SetValue url={cointerval} check={null} buttonText="Set CO interval" fieldId="interval-co" labelText="CO send interval" type="number" helperText="Error!" successNotifText="Succesfuly set CO interval!" failNotifText="Error on setting CO interval!" />
+            <SetValue url={no2interval} check={null} buttonText="Set NO2 interval" fieldId="interval-no2" labelText="NO2 send interval" type="number" helperText="Error!" successNotifText="Succesfuly set NO2 interval!" failNotifText="Error on setting NO2 interval!" />
+            <SetValue url={no2treshold} check={thresholdCheck} buttonText="Set NO2 treshold" fieldId="treshold-no2" labelText="NO2 treshold" type="number" helperText="Error!" successNotifText="Succesfuly set NO2 treshold!" failNotifText="Error on setting NO2 treshold!" />
           </Box>
 
         

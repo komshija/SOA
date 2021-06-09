@@ -226,7 +226,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3500/api/greater/co/4",
+							"raw": "http://localhost:3500/api/greater/no2/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -235,7 +235,7 @@
 							"path": [
 								"api",
 								"greater",
-								"co",
+								"no2",
 								"4"
 							]
 						}
@@ -248,7 +248,7 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:3500/api/less/co/4",
+							"raw": "http://localhost:3500/api/less/no2/4",
 							"protocol": "http",
 							"host": [
 								"localhost"
@@ -257,7 +257,7 @@
 							"path": [
 								"api",
 								"less",
-								"co",
+								"no2",
 								"4"
 							]
 						}

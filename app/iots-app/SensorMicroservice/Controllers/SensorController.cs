@@ -36,7 +36,8 @@ namespace SensorMicroservice.Controllers
                 Name = "NO2 Sensor ",
                 Desciption = "Nitrogen Dioxide (NO2) is one of a group of highly reactive gases known as oxides of nitrogen or nitrogen oxides (NOx). Other nitrogen oxides include nitrous acid and nitric acid. NO2 is used as the indicator for the larger group of nitrogen oxides. NO2 primarily gets in the air from the burning of fuel.",
                 SendInterval = _service.GetSendInterval(),
-                Threshold = _service.GetThreshold()
+                Threshold = _service.GetThreshold(),
+                LastDataRead = _service.GetLastDataRead()
             });
         }
 
@@ -61,7 +62,7 @@ namespace SensorMicroservice.Controllers
         [SwaggerResponse(400, "Interval is less then two number.")]
         public IActionResult ChangeThreshold(double threshold)
         {
-            if (threshold <= 2)
+            if (threshold < 0 || threshold > 1)
                 return BadRequest();
             _service.SetThreshold(threshold);
             _logger.LogInformation("Threshold value has been changed on : {threshold} !",threshold);

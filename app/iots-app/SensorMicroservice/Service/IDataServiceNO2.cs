@@ -11,5 +11,6 @@ namespace SensorMicroservice.Service
         double GetThreshold();
         void SetSendInterval(int value);
         int GetSendInterval();
+        decimal GetLastDataRead();
     }
 }

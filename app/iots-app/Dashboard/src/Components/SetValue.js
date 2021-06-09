@@ -6,8 +6,8 @@ import { useSnackbar } from 'notistack';
 import Button from '@material-ui/core/Button';
 
 const SetValue = (props) => {
-    const {url, fieldId, labelText, type, helperText, buttonText, successNotifText, failNotifText, check} = props;
-    const [text, setText] = useState(5);
+    const {url, fieldId, labelText, type, startValue, buttonText, successNotifText, failNotifText, check} = props;
+    const [text, setText] = useState(startValue);
     const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     const sendPost = async () => {
@@ -51,7 +51,7 @@ const SetValue = (props) => {
                 <TextField 
                 value={text}
                 onChange={event => setText(event.target.value)}
-                error={RegExp("[^0-9.]").test(text) || parseFloat(text) <= 0}
+                error={RegExp("[^0-9.]").test(text)}
                 id={fieldId}
                 label={labelText}
                 variant="outlined"

@@ -22,7 +22,7 @@ Start the project by navigating to `docker-compose.yml` location and running `do
 - **co-sensor-microservice** - Service that simulates senosr work by randomly sending CO data to datamicroservice. Also has routs for setting send (reading) interval and getting sensor information.
 - **no2-sensor-microservice** - Service that simulates sensor work by randomly sending NO2 data to datamicroservice only when the value is greater by a certain amount than the previously read value (decided by threshold). Also has routs for setting send (reading) interval and threshold and getting sensor information.
 - **cep** - Analytics service which is subscribed on `device/co/messages` and `device/no2/messages` topics. It analyzes recived data and publishes alerts on `device/co/command` and `device/no2/command` topics depending on data type.
-- **commandmicroservice** - Service that is subscribed on `device/co/command` and `device/no2/command` topics. When alert arrives, it gives out a command for the actuators on sensors depending on the alert type.
+- **commandmicroservice** - Service that is subscribed on `device/co/command` and `device/no2/command` topics. When alert arrives, it gives out a command for the actuators on sensors depending on the alert type and generates notification for dashboard.
 
 ## Routes
 API Gateway rout URL is on http://localhot:3500/

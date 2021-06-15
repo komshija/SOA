@@ -13,7 +13,7 @@ It consists of ...
 
 ## Usage
 
-Start the project by navigating to `docker-compose.yml` location and running `docker compose build` command for building the app, when finished run the `docker compose up` command for starting the app. After starting, open the http://localhost:8080/ URL in the browser. Dashboard will be displayed where you can monitor sensor readings and test services via API gateway.
+Start the project by navigating to `docker-compose.yml` location and running `docker compose build` command for building the app. When finished run the `docker compose up` command for starting the app. After starting, open the http://localhost:8080/ URL in the browser. Dashboard will be displayed where you can monitor sensor readings and test services via API gateway.
 
 ## Services
 

@@ -7,7 +7,6 @@ faasd is a light-weight option for adopting OpenFaaS which uses the same tooling
 # Air Quality App
 
 Air Quality app simulates sensor readings and analysis of those readings using a microservice architecture.
-It consists of ...
 
 ![diagram](https://user-images.githubusercontent.com/63471407/122078224-b65e0600-cdfc-11eb-8d44-1b76bcddbee1.jpg)
 
@@ -17,15 +16,17 @@ Start the project by navigating to `docker-compose.yml` location and running `do
 
 ## Services
 
+- **dashboard** - GUI for monitoring and managing system
+- **mqtt** - uses musquito an open source mqtt broker
 - **apigateway** - API gateway services
 - **datamicroservice** - Service that recives data from sensors and saves it in database. Also it publishes data to `device/co/messages` and `device/no2/messages` topic depending on which data type it recived.
 - **co-sensor-microservice** - Service that simulates senosr work by randomly sending CO data to datamicroservice. Also has routs for setting send (reading) interval and getting sensor information.
 - **no2-sensor-microservice** - Service that simulates sensor work by randomly sending NO2 data to datamicroservice only when the value is greater by a certain amount than the previously read value (decided by threshold). Also has routs for setting send (reading) interval and threshold and getting sensor information.
-- **cep** - Analytics service which is subscribed on `device/co/messages` and `device/no2/messages` topics. It analyzes recived data and publishes alerts on `device/co/command` and `device/no2/command` topics depending on data type.
+- **cep** - Analytics service which is subscribed on `device/co/messages` and `device/no2/messages` topics. It analyzes recived data and publishes alerts on `device/co/command` and `device/no2/command` topics depending on data type. Kuiper was used as analytics microservice.
 - **commandmicroservice** - Service that is subscribed on `device/co/command` and `device/no2/command` topics. When alert arrives, it gives out a command for the actuators on sensors depending on the alert type and generates notification for dashboard.
 
 ## Routes
-API Gateway rout URL is on http://localhot:3500/
+API Gateway route URL is on http://localhot:3500/
 
 - **GET** /api/get/{sensor} - gets all data readings from a given sensor.
 - **GET** /api/greater/{sensor}/{value} - gets all data readings greater than given value from a given sensor.
@@ -37,3 +38,14 @@ API Gateway rout URL is on http://localhot:3500/
 - **GET** /api/no2info - gets information about NO2 sensor
 - **POST** /api/no2sendinterval/{sendInterval} - sets send (reading) interval on NO2 sensor for a given interval in seconds.
 - **POST** /api/no2treshold/{threshold} - sets threshold value on NO2 sensor for a given value (between 0 and 1).
+
+## Implementation 
+
+| Service name  | Implemented with |
+| ------------- | ------------- |
+| CO senesor  | ASP.NET 5.0  |
+| NO2 sensor  | ASP.NET 5.0  |
+| Data MS  | ASP.NET 5.0  |
+| Command MS  | ASP.NET 5.0  |
+| API Gateway  | ASP.NET 5.0 + Ocelot  |
+| Dashboard  | React + Nginx  |

@@ -25,7 +25,7 @@ Start the project by navigating to `docker-compose.yml` location and running `do
 - **commandmicroservice** - Service that is subscribed on `device/co/command` and `device/no2/command` topics. When alert arrives, it gives out a command for the actuators on sensors depending on the alert type and generates notification for dashboard.
 
 ## Routes
-API Gateway rout URL is on http://localhot:3500/
+API Gateway route URL is on http://localhot:3500/
 
 - **GET** /api/get/{sensor} - gets all data readings from a given sensor.
 - **GET** /api/greater/{sensor}/{value} - gets all data readings greater than given value from a given sensor.

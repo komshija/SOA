@@ -1,1 +1,0 @@
-co(value float, date string, dataName string) WITH ( DATASOURCE = "device/co/messages", FORMAT = "JSON");

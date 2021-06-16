@@ -1,1 +1,0 @@
-{ "sql": "SELECT * from no2 where value > 20", "actions": [ { "log": {} }, { "mqtt": { "server": "mqtt:1883", "topic": "device/no2/command" } } ] }
